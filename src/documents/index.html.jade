@@ -1,0 +1,12 @@
+---
+layout: default
+---
+div(class="page-content")
+	span
+		h1
+			!= site.title
+
+	- each post in getCollection("posts").toJSON()
+		div
+			a(href="#{post.url}")  #{post.title}
+
