@@ -28,16 +28,19 @@ docpadConfig = {
 
 			# The website's styles
 			styles: [
-				'css/style.css'
-				'css/vendor/normalize.css'
-            				'css/vendor/main.css'
+				'/css/vendor/normalize.css'
+            	'/css/vendor/main.css'
+            	'/bower_components/bootstrap/dist/css/bootstrap.min.css'
+            	'/bower_components/bootstrap/dist/css/bootstrap-theme.min.css'
+				'/css/style.css'
 			]
 
 			# The website's scripts
 			scripts: [
 				'//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'
-				'js/plugins.js'
-				'js/main.js'
+				'/bower_components/bootstrap/dist/js/bootstrap.min.js'
+				'/js/plugins.js'
+				'/js/main.js'
 			]
 
 			meta: [
