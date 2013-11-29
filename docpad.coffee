@@ -37,7 +37,6 @@ docpadConfig = {
 
 			# The website's scripts
 			scripts: [
-				'//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'
 				'/bower_components/bootstrap/dist/js/bootstrap.min.js'
 				'/js/plugins.js'
 				'/js/main.js'

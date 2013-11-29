@@ -15,7 +15,7 @@ head
 	//Place favicon.ico and apple-touch-icon.png in the root directory
 	!= getBlock('meta').add(site.meta).toHTML()
 	!= getBlock("styles").add(site.styles).toHTML()
-	script(src="js/vendor/modernizr-2.6.2.min.js")
+	script(src="/js/vendor/modernizr-2.6.2.min.js")
 body
 	//if lt IE 8
 		p.browsehappy
@@ -34,7 +34,7 @@ body
 					a.navbar-brand(href="/")
 						!= site.title
 				.collapse.navbar-collapse
-					ul.nav.navbar-nav
+					ul.nav.navbar-nav.navbar-right
 						li
 							a(href="#")
 								| About
@@ -44,8 +44,10 @@ body
 			p.container.credit
 				| Some text 
 				!= site.title
+
+	script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
 	script.
-		window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')
+		window.jQuery || document.write('<script src="/js/vendor/jquery-1.10.2.min.js"><\/script>')
 	!= getBlock('scripts').add(site.scripts, {defer:false}).toHTML()
 	// Google Analytics: change UA-XXXXX-X to be your sites ID.
 	script.
