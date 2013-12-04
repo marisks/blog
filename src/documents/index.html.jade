@@ -2,13 +2,17 @@
 layout: default
 ---
 div(class="container")
-	- each post in getCollection("posts").toJSON()
-		article
-			header
-				h1
-					a(href="#{post.url}")  #{post.title}
-				p.meta
-					time(datetime="#{post.date.toISOString()}")
-						!= post.date.toDateString()
-			.entry-content
-				!= post.contentRenderedWithoutLayouts
+	div(class="col-sm-8")
+		- each post in getCollection("posts").toJSON()
+			article
+				header
+					h1
+						a(href="#{post.url}")  #{post.title}
+					p.meta
+						time(datetime="#{post.date.toISOString()}")
+							!= post.date.toDateString()
+				.entry-content
+					!= post.description
+	.col-sm-4.visible-sm.visible-md.visible-lg
+		aside
+			
