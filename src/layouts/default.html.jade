@@ -9,8 +9,9 @@ head
 	meta(charset="utf-8")
 	meta(http-equiv="X-UA-Compatible", content="IE=edge")
 	title
-		!=site.title
-	meta(name="description", content="#{site.description}")
+		!= getPreparedTitle()
+	meta(name="description", content="#{getPreparedDescription()}")
+	meta(name="keywords", content="#{getPreparedKeywords()}")
 	meta(name="viewport", content="width=device-width, initial-scale=1")
 	//Place favicon.ico and apple-touch-icon.png in the root directory
 	!= getBlock('meta').add(site.meta).toHTML()
@@ -42,9 +43,15 @@ body
 				.collapse.navbar-collapse
 					ul.nav.navbar-nav.navbar-right
 						li
-							a(href="about.html")
+							a(href="/about.html")
 								| About
-		!= content
+		.container
+			.row
+				.col-sm-8
+					!= content
+				.col-sm-4.visible-sm.visible-md.visible-lg
+					aside
+
 	#footer
 		.container
 			p.container.credit

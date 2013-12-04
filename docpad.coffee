@@ -18,7 +18,7 @@ docpadConfig = {
 
 			# The website description (for SEO)
 			description: """
-					writing about .NET, JavaScript, Web, EPiServer and programming languages
+					blog about .NET, JavaScript, Web, EPiServer and programming languages
 				"""
 
 			# The website keywords (for SEO) separated by commas
