@@ -102,6 +102,11 @@ docpadConfig = {
 					res.redirect(newUrl+req.url, 301)
 				else
 					next()
+
+	plugins:
+		dateurls:
+			cleanurl: true
+			trailingSlashes: true
 }
 
 # Export our DocPad Configuration
