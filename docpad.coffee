@@ -107,6 +107,10 @@ docpadConfig = {
 		dateurls:
 			cleanurl: true
 			trailingSlashes: true
+
+		cleanurls:
+			collectionName: 'posts'
+
 }
 
 # Export our DocPad Configuration
