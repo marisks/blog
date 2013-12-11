@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "DevConFu conference review"
-description: "Before conference I was sceptical about it. I was discovering conference program and found only few interesting sessions for me. But ..."
+description: "DevConFu is first DevClub conference in Latvia which was hold 13th – 15th November 2013 in Jurmala. Before conference I was sceptical about it. I was discovering conference program and found only few interesting sessions for me. But ..."
 category: 
 tags: [Conferences]
 date: 2013-12-11
