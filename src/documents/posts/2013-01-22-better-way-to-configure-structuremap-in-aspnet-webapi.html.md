@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Better way to configure StructureMap in ASP.NET WebAPI"
-description: ""
+description: "In previous article I described how to configure StructureMap in ASP.NET WebAPI, but that solution has some issues. This article describes how to configure ASP.NET Web API by creating IHttpControllerActivator."
 category: 
 tags: [StructureMap, WebAPI, ASP.NET, DI, IoC]
 date: 2013-01-22

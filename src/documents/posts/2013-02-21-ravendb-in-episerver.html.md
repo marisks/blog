@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Setting up RavenDB in EPiServer"
-description: ""
+description: "RavenDB is a transactional, open-source Document Database written in .NET and is great replacement for DDS. But there are not much information how to use it together with EPiServer. Luckly EPiServer is normal ASP.NET application and setting everything is simple. This article describes how to setup RavenDB in any ASP.NET application including EPiServer."
 category: 
 tags: [RavenDB,EPiServer]
 date: 2013-02-21

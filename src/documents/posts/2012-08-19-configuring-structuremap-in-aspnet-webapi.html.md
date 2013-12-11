@@ -1,13 +1,13 @@
 ---
 layout: post
 title: "Configuring StructureMap in ASP.NET WebAPI"
-description: ""
+description: "Last week I started to work in project with WebAPI and first thing what I noticed was improper usage of StructureMap as IoC container. I googled for StructureMap configuration in WebAPI, but couldn't find good solution. In this article I am describing how to use StructureMap to configure ASP.NET WebAPI."
 category: 
 tags: [StructureMap, WebAPI, ASP.NET, DI, IoC]
 date: 2012-08-19
 ---
 
-Last week I started to work in project with WebAPI and first thing what I noticed was improper usage of StructureMap as IoC container. I googled for StrutureMap configuration in WebAPI, but couldn't find good solution. But, I found great tutorial how to inject dependencies into WebAPI controllers and do dependency injection with Unity IoC container: [Using the Web API Dependency Resolver](http://www.asp.net/web-api/overview/extensibility/using-the-web-api-dependency-resolver). 
+Last week I started to work in project with WebAPI and first thing what I noticed was improper usage of StructureMap as IoC container. I googled for StructureMap configuration in WebAPI, but couldn't find good solution. But, I found great tutorial how to inject dependencies into WebAPI controllers and do dependency injection with Unity IoC container: [Using the Web API Dependency Resolver](http://www.asp.net/web-api/overview/extensibility/using-the-web-api-dependency-resolver). 
 
 Dependency injection in WebAPI are done with two classes - first implements IDependencyScope interface and second inherits first class and implements IDependencyResolver interface. IDependencyScope represents child scope - any resources created in it should be released in Dispose method. Unity container supports creating child containers and it is used in WebAPI. StructureMap starting with version 2.6.1 also supports child container creation - those are called "nested containers" ([“Nested Containers” in StructureMap 2.6.1](http://codebetter.com/jeremymiller/2010/02/10/nested-containers-in-structuremap-2-6-1/)). When nested containers in StructureMap are disposed, all transient objects that it created also are disposed - that's what we want to achieve in IDependencyScope implementation. Solution is easy - just replace Unity implementation from [Using the Web API Dependency Resolver](http://www.asp.net/web-api/overview/extensibility/using-the-web-api-dependency-resolver) article with StructureMap implementation.
 

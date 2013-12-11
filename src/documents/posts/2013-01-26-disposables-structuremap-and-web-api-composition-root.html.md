@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Disposables, StructureMap and Web API composition root"
-description: ""
+description: "More notes on configuring StructureMap and WebAPI. This time about Disposables."
 category: 
 tags: [StructureMap, IoC, WebAPI, DI, ASP.NET]
 date: 2013-01-26
