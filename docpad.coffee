@@ -30,8 +30,7 @@ docpadConfig = {
 			styles: [
 				'/css/vendor/normalize.css'
             	'/css/vendor/main.css'
-            	'/bower_components/bootstrap/dist/css/bootstrap.min.css'
-            	'/bower_components/bootstrap/dist/css/bootstrap-theme.min.css'
+            	'/css/vendor/bootstrap.min.css'
 				'/css/style.css'
 			]
 
