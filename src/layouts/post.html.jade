@@ -2,8 +2,12 @@
 layout: default
 ---
 article
-	h1
-		!= document.title
+	header
+		h1
+			!= document.title
+		p.meta
+			time(datetime="#{document.date.toISOString()}")
+				!= document.date.toDateString()
 
 	!=	content
 
