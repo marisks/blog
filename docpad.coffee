@@ -31,6 +31,7 @@ docpadConfig = {
 				'/css/vendor/normalize.css'
             	'/css/vendor/main.css'
             	'/css/vendor/bootstrap.min.css'
+            	'//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'
 				'/css/style.css'
 			]
 
