@@ -47,26 +47,33 @@ body
 								| About
 		.container
 			.row
-				.col-sm-8
+				.col-sm-8.main-content
 					!= content
 				.col-sm-4
-					aside
-						ul.social
-							li
-								a(href="http://stackoverflow.com/users/660154/marisks", target="_blank")
-									i.fa.fa-stack-overflow
-							li
-								a(href="https://github.com/marisks", target="_blank")
-									i.fa.fa-github-alt
-							li
-								a(href="https://twitter.com/pioners1001", target="_blank")
-									i.fa.fa-twitter
-							li
-								a(href="http://www.linkedin.com/pub/maris-krivtezs/31/98b/b53", target="_blank")
-									i.fa.fa-linkedin
-							//- li
-							//- 	a(href="/atom.xml", target="_blank")
-							//- 		i.fa.fa-rss
+					aside.panel.panel-default
+						.panel-body
+							.about
+								img.center-block.img-responsive.thumbnail(src="/img/profile.jpg", alt="profile picture")
+								p
+									| Hi! I'm Māris Krivtežs. I am Web developer primarily working with ASP.NET, EPiServer and front-end development, but same time learning different programming languages, learning new programming paradigms, architectures and design. I spend my free time with my family, reading books, bicycling and travelling.
+
+
+							ul.social
+								li
+									a(href="http://stackoverflow.com/users/660154/marisks", target="_blank")
+										i.fa.fa-stack-overflow
+								li
+									a(href="https://github.com/marisks", target="_blank")
+										i.fa.fa-github-alt
+								li
+									a(href="https://twitter.com/pioners1001", target="_blank")
+										i.fa.fa-twitter
+								li
+									a(href="http://www.linkedin.com/pub/maris-krivtezs/31/98b/b53", target="_blank")
+										i.fa.fa-linkedin
+								//- li
+								//- 	a(href="/atom.xml", target="_blank")
+								//- 		i.fa.fa-rss
 
 
 	#footer
