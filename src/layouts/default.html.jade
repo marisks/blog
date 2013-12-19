@@ -18,6 +18,17 @@ head
 	!= getBlock("styles").add(site.styles).toHTML()
 	script(src="/js/vendor/modernizr-2.6.2.min.js")
 body
+	// Google Tag Manager
+	noscript
+		iframe(src='//www.googletagmanager.com/ns.html?id=GTM-WGPHF7', height='0', width='0', style='display: none; visibility: hidden;')
+	script.
+		(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+		'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-WDKMR7');
+	// End Google Tag Manager
+
 	//if lt IE 8
 		p.browsehappy
 			|You are using an 
@@ -74,11 +85,3 @@ body
 	script.
 		window.jQuery || document.write('<script src="/js/vendor/jquery-1.10.2.min.js"><\/script>')
 	!= getBlock('scripts').add(site.scripts, {defer:false}).toHTML()
-	// Google Analytics: change UA-XXXXX-X to be your sites ID.
-	script.
-		(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-		function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-		e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-		e.src='//www.google-analytics.com/analytics.js';
-		r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-		ga('create','UA-XXXXX-X');ga('send','pageview');
