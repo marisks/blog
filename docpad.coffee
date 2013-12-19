@@ -14,7 +14,7 @@ docpadConfig = {
 			url: "http://marisks.net"
 
 			# The default title of our website
-			title: "marisks blog"
+			title: "marisks # code"
 
 			# The website description (for SEO)
 			description: """
