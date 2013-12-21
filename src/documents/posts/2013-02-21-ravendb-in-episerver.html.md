@@ -1,13 +1,15 @@
 ---
 layout: post
 title: "Setting up RavenDB in EPiServer"
-description: "RavenDB is a transactional, open-source Document Database written in .NET and is great replacement for DDS. But there are not much information how to use it together with EPiServer. Luckly EPiServer is normal ASP.NET application and setting everything is simple. This article describes how to setup RavenDB in any ASP.NET application including EPiServer."
+description: "I am using RavenDB in EPiServer for several months already. It is great replacement for DDS (Dynamic Data Store)."
 category: 
 tags: [RavenDB,EPiServer]
 date: 2013-02-21
 ---
 
+<p class="lead">
 I am using RavenDB in EPiServer for several months already. It is great replacement for DDS (Dynamic Data Store).
+</p>
 
 Setting up RavenDB in EPiServer is same as in some other ASP.NET application. I am using StructureMap as dependency resolver, but it could be any DI container. I created StructureMap Registry and I am registering there DocumentStore as singleton and DocumentSession as HybridHttpOrThreadLocalScoped:
 

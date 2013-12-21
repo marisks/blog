@@ -1,13 +1,15 @@
 ---
 layout: post
 title: "Better way to configure StructureMap in ASP.NET WebAPI"
-description: "In previous article I described how to configure StructureMap in ASP.NET WebAPI, but that solution has some issues. This article describes how to configure ASP.NET Web API by creating IHttpControllerActivator."
+description: "Few months ago Mark Seeman posted an article about why using Web API's IDependencyResolver is not appropriate. He suggests composing the dependency graph in IHttpControllerActivator because it provides context for composition."
 category: 
 tags: [StructureMap, WebAPI, ASP.NET, DI, IoC]
 date: 2013-01-22
 ---
 
+<p class="lead">
 Few months ago [Mark Seeman](http://blog.ploeh.dk/) posted [article](http://blog.ploeh.dk/2012/09/28/DependencyInjectionAndLifetimeManagementWithASPNETWebAPI.aspx) about why using Web API's IDependencyResolver is not appropriate. He suggests composing the dependency graph in IHttpControllerActivator because it provides context for composition. More about it could be read in his article.
+</p>
 
 In other [article](http://blog.ploeh.dk/2012/10/03/DependencyInjectionInASPNETWebAPIWithCastleWindsor.aspx) Mark shows how to set up Castle Windsor container for Web API. I am going to show implementation for StructureMap. All you need to do is create custom IHttpControllerActivator implementation and implement Create method where you resolve controller instances. As controller types are concrete classes we just have to call GetInstance method by providing controller type.
 

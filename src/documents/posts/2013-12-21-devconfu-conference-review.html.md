@@ -1,12 +1,15 @@
 ---
 layout: post
 title: "DevConFu conference review"
-description: "DevConFu is first DevClub conference in Latvia which was hold 13th – 15th November 2013 in Jurmala. Before conference I was sceptical about it. I was discovering conference program and found only few interesting sessions for me. But ..."
+description: "DevConFu is first DevClub conference in Latvia which was hold 13th – 15th November 2013 in Jurmala. Before conference I was sceptical about it. I was discovering conference program and found only few interesting sessions for me. Saw that there were many Agile, Testing, but less development related stuff. I also wanted to get to Mark Seeman's session \"Poka-yoke code: APIs for stupid programmers\", but was dissapointed that it didn't happen. And so I was even more sceptical. But."
 category: 
 tags: [Conferences]
-date: 2013-12-11
+date: 2013-12-21
 ---
-Before conference I was sceptical about it. I was discovering conference program and found only few interesting sessions for me. Saw that there were many Agile, Testing, but less development related stuff. I also wanted to get to [Mark Seeman's](https://twitter.com/ploeh) session _Poka-yoke code: APIs for stupid programmers_, but was dissapointed that it didn't happen. And so I was even more sceptical. But ...
+
+<p class="lead">
+DevConFu is first DevClub conference in Latvia which was hold 13th – 15th November 2013 in Jurmala. Before conference I was sceptical about it. I was discovering conference program and found only few interesting sessions for me. Saw that there were many Agile, Testing, but less development related stuff. I also wanted to get to [Mark Seeman's](https://twitter.com/ploeh) session _Poka-yoke code: APIs for stupid programmers_, but was dissapointed that it didn't happen. And so I was even more sceptical. But...
+</p>
 
 ##First day
 
