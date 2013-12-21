@@ -111,6 +111,13 @@ docpadConfig = {
 		cleanurls:
 			collectionName: 'posts'
 
+		ghpages:
+			deployRemote: 'target'
+			deployBranch: 'master'
+
+		rss:
+			collection: 'posts'
+
 }
 
 # Export our DocPad Configuration
