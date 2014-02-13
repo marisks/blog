@@ -116,8 +116,9 @@ docpadConfig = {
 			deployBranch: 'master'
 
 		rss:
-			collection: 'posts'
-
+			default:
+				collection: 'posts'
+				url: '/rss.xml'
 }
 
 # Export our DocPad Configuration
