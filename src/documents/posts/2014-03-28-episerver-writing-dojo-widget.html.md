@@ -16,7 +16,7 @@ Dojo provides lot of "UI controls" which is used by EPiServer, but there are tim
 
 For Geta Tags I started with simple widget which extended [Dojo MultiComboBox](http://dojotoolkit.org/reference-guide/1.9/dojox/form/MultiComboBox.html). While it work, it didn't provide user firiendly interface. So I started to look for solutions. I Googled for ready widgets for Dojo and found nothing, but found a lot of jQuery/jQuery UI plugins. So the only task left was how to make jQuery plugin to work with Dojo in EPiServer.
 
-# Dojo widgets
+# <a name="dojo_widgets"></a>Dojo widgets
 There is a great book about Dojo - [Mastering Dojo: JavaScript and Ajax Tools for Great Web Experiences](http://pragprog.com/book/rgdojo/mastering-dojo). This book describes how to work, setup Dojo and also how to extend it.
 
 Here is widget lifetime described by the book:
@@ -139,7 +139,87 @@ After defining editor descriptor you can use your custom property in some conten
 Just decorate your property with _UIHint_ attribute with value you defined in editor descriptor. Now custom Dojo widget will be used when you start editing the field.
 
 # Advanced implementation
-Describe how to reference scripts and styles, how to use jQuery plugin with Dojo, describe referencing Dojo AMD libraries.
+
+While you can create complex Dojo widgets yourself most of the times it is better and faster to use existing libraries. Dojo do not have much custom plugins, but jQuery and jQuery UI (and there are plenty of other libraries) has and it would be great to use them in your Dojo widgets. 
+
+## Referencing scripts and CSS stylesheets
+
+In usual Web project referencing script libraries is simple - just add script tags in your markup and start using the plugins, but in EPiServer Dojo implementation it is little bit different. In EPiServer administration interface you can't get to the markup and add scripts manually.
+
+There are two ways to use libraries - use CDN or use scripts from project. When you want to include the script in the project, you have to put them in your module folder which is defined in _module.config_, for example: _ClientResources/Geta.Tags_ . Same appliers for CSS. You can also organize them in subfolders. For example, Geta Tags have _styles_ folder for CSS and _vendor_ folder for 3rd party libraries:
+
+![File structure](/img/2014-04-11-episerver-writing-dojo-widget/file_structure.jpg)
+
+Next step is informing EPiServer to load these scripts and stylesheets when EPiServer administrative interface loads. This can be done in _module.config_:
+
+    <module>
+      <assemblies>
+        <add assembly="Geta.Tags" />
+      </assemblies>
+
+      <clientResources>
+        <add name="geta-tags-vendor" resourceType="Script" sortIndex="1"
+            path="Geta.Tags/vendor/jquery-2.1.0.min.js"  />
+        <add name="geta-tags-vendor" resourceType="Script" sortIndex="2"
+            path="Geta.Tags/vendor/jquery-ui.min.js"  />
+        <add name="geta-tags-vendor" resourceType="Script" sortIndex="3"
+            path="Geta.Tags/vendor/tag-it.min.js"  />
+        <add name="geta-tags-styles" resourceType="Style" sortIndex="1"
+            path="Geta.Tags/styles/jquery.tagit.css"  />
+        <add name="geta-tags-styles" resourceType="Style" sortIndex="2"
+            path="Geta.Tags/styles/tagit.ui-zendesk.css"  />
+      </clientResources>
+      
+      <dojoModules>
+        <add name="geta-tags" path="Geta.Tags" />
+      </dojoModules>
+
+      <clientModule>
+        <moduleDependencies>
+          <add dependency="CMS" type="RunAfter" />
+        </moduleDependencies>
+        <requiredResources>
+          <add name="geta-tags-vendor" />
+          <add name="geta-tags-styles" />
+        </requiredResources>
+      </clientModule>
+    </module>
+
+First of all define _clientResources_ section and add all scripts and styles using _add_ tag. For each resource define:
+- _name_ - this is used to distinguish between different resources. You can use different name for each resource or use same name to group resources. In the Geta Tags I used one name for scripts and other for styles.
+- _resourceType_ - type of the resource - _Script_ or _Style_.
+- _sortIndex_ - the order in which resource will be rendered for resources with same name.
+
+After that you have to define loading of these resources:
+- define _moduleDependencies_ section under _clientModule_ section and add dependency on _CMS_ with type _RunAfter_. _RunAfter_ will inform EPiServer to render resources after EPiServer administration is loaded.
+- define _requiredResources_ section under _clientModule_ section and add the names of your defined _clientResources_ here.
+
+This is all we need to get your scripts loaded.
+
+## Using jQuery plugin in Dojo widget
+
+When you have all libraries in place, it is quite easy to start using them. Each Dojo widget hase _domNode_ which can be used to access widget's DOM node using jQuery. That means that jQuery plugin can be attached to that DOM node. In Geta Tags I am using [tag-it](https://github.com/aehlke/tag-it) jQuery UI plugin to handle multiple tags:
+
+    define([
+        "dojo/_base/declare",
+        "dijit/form/TextBox"
+    ],
+    function (
+        declare,
+        TextBox) {
+
+        return declare([TextBox], {
+            postCreate: function() {
+                $(this.domNode).find('input').tagit({
+                    autocomplete: { delay: 0, minLength: 2, source: '/getatags' }
+                });
+            }
+        });
+    });
+
+First of all I am extending Dojo TextBox widget and overriding _postCreate_ method with my implementation. _postCreate_ in this case is the most approptate place to put your functionality because I can access _domNode_ here. Dojo TextBox HTML has several wrappers around _input_ so I have to find input there and I am using jQuery for that. After that I am applying Tag-it plugin on the input field.
+
+The widget implementation becomes much simpler and it is much easier to achieve better user experience with using custom plugins.
 
 # Packaging
 Describe nuget package creation - what is needed, command line call and also automating with TeamCity.
