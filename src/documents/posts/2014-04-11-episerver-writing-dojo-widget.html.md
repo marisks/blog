@@ -4,7 +4,7 @@ title: "# EPiServer: writing Dojo widget"
 description: "I was working on open source library <a href=\"https://github.com/Geta/Tags\">Geta Tags</a> and wanted to improve editor user experience. Starting from EPiServer 7, EPiServer uses <a href=\"http://dojotoolkit.org/\">Dojo Toolkit</a> for administrative interface. Searching for tutorials and articles on how to create Dojo widgets for EPiServer didn't get expected results. So I had to get through all the Dojo creation and configuration process through trial and errors. In this article I will try to describe how to create simple and more advanced Dojo widgets for EPiServer."
 category: [# EPiServer]
 tags: [EPiServer, Dojo]
-date: 2014-03-28
+date: 2014-04-11
 ---
 
 <p class="lead">
