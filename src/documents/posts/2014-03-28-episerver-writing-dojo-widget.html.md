@@ -1,25 +1,25 @@
 ---
 layout: post
 title: "# EPiServer: writing Dojo widget"
-description: ""
+description: "I was working on open source library <a href=\"https://github.com/Geta/Tags\">Geta Tags</a> and wanted to improve editor user experience. Starting from EPiServer 7, EPiServer uses <a href=\"http://dojotoolkit.org/\">Dojo Toolkit</a> for administrative interface. Searching for tutorials and articles on how to create Dojo widgets for EPiServer didn't get expected results. So I had to get through all the Dojo creation and configuration process through trial and errors. In this article I will try to describe how to create simple and more advanced Dojo widgets for EPiServer."
 category: [# EPiServer]
 tags: [EPiServer, Dojo]
 date: 2014-03-28
 ---
 
 <p class="lead">
-I was working on open source library <a href="https://github.com/Geta/Tags">Geta Tags</a> and wanted to improve editor user experience. Starting from EPiServer 7, EPiServer uses Dojo for administrative interface. Googling for articles on how to create Dojo widgets for EPiServer didn't get expected results that I had to get through all the Dojo creation process through trial and errors. In this article I will try to describe how to create simple and more advanced Dojo widgets for EPiServer.
+I was working on open source library <a href="https://github.com/Geta/Tags">Geta Tags</a> and wanted to improve editor user experience. Starting from EPiServer 7, EPiServer uses <a href="http://dojotoolkit.org/">Dojo Toolkit</a> for administrative interface. Searching for tutorials and articles on how to create Dojo widgets for EPiServer didn't get expected results. So I had to get through all the Dojo creation and configuration process through trial and errors. In this article I will try to describe how to create simple and more advanced Dojo widgets for EPiServer.
 </p>
 
 # Problem
-Dojo provides lot of "UI controls" which is used by EPiServer, but there are times when you need more advanced user experience. In my case I had to create user friendly tag selection. I found several articles ([here](http://world.episerver.com/Blogs/Linus-Ekstrom/Dates/2012/10/Creating-a-Dojo-based-component/) and [here](http://world.episerver.com/Blogs/Linus-Ekstrom/Dates/2013/12/Auto-suggest-editor-in-EPiServer-75/)) how to create and extend Dojo widgets - those did not explain much why and how those work, but was good starting point.
+Dojo provides lot of _UI controls_ which are used by EPiServer, but there are times when you need more advanced user experience. In my case I had to create user friendly tag selection. I found several articles ([here](http://world.episerver.com/Blogs/Linus-Ekstrom/Dates/2012/10/Creating-a-Dojo-based-component/) and [here](http://world.episerver.com/Blogs/Linus-Ekstrom/Dates/2013/12/Auto-suggest-editor-in-EPiServer-75/)) how to create and extend Dojo widgets - those did not explain much why and how those work, but was good starting point.
 
-For Geta Tags I started with simple widget which extended [Dojo MultiComboBox](http://dojotoolkit.org/reference-guide/1.9/dojox/form/MultiComboBox.html). While it work, it didn't provide user firiendly interface. So I started to look for solutions. I Googled for ready widgets for Dojo and found nothing, but found a lot of jQuery/jQuery UI plugins. So the only task left was how to make jQuery plugin to work with Dojo in EPiServer.
+For Geta Tags I started with simple widget which extended Dojo [MultiComboBox](http://dojotoolkit.org/reference-guide/1.9/dojox/form/MultiComboBox.html). While it work, it didn't provide user friendly interface. So I started to look for solutions. I searched for Dojo widgets which might be used and found nothing, but found a lot of jQuery/jQuery UI plugins for tag rendering. So the only task left was how to make jQuery plugin to work with Dojo in EPiServer.
 
 # <a name="dojo_widgets"></a>Dojo widgets
 There is a great book about Dojo - [Mastering Dojo: JavaScript and Ajax Tools for Great Web Experiences](http://pragprog.com/book/rgdojo/mastering-dojo). This book describes how to work, setup Dojo and also how to extend it.
 
-Here is widget lifetime described by the book:
+First thing to understand about widget is it's lifetime - in what order which methods are called. It will let you better understand why something works in particular way. Here is widget lifetime described in the book:
 - widget constructor is called
 - mixin parameters applied
 - postMixinProperties() method called
@@ -30,11 +30,11 @@ Here is widget lifetime described by the book:
 - expand child widgets
 - startup() method called
 
-Extensibility points are these for methods:
-- _postMixinProperties_: it is called after the properties have been initialized. Override default properties or add custom properties in this method.
-- _buildRendering_: it gets the template and fills in the details. Usually you will not need to override this method. Default implementation is provided by [dijit._Templated](https://dojotoolkit.org/reference-guide/1.9/dijit/_Templated.html#dijit-templated). If you want to handle rendering yourself, then override this method.
-- _postCreate_: this is the main extensibility point. Widget has been rendered, but not it's child widgets and [containerNode](https://dojotoolkit.org/documentation/tutorials/1.7/templated/#containerNode). You can set custom attributes, access _this.domNode_ (reference to parent node of the widget itself) and maipulate it here.
-- _startup_: this is called when widget and all child widgets have been created. This is the place where to access child widgets.
+There are several methods which you might want to use to extend the widget. Extensibility points are these methods:
+- _postMixinProperties_ - it is called after the properties have been initialized. Override default properties or add custom properties in this method.
+- _buildRendering_ - it gets the template and fills in the details. Usually you will not need to override this method. Default implementation is provided by [dijit._Templated](https://dojotoolkit.org/reference-guide/1.9/dijit/_Templated.html#dijit-templated). If you want to handle rendering yourself, then override this method.
+- _postCreate_ - this is the main extensibility point. Widget has been rendered, but not it's child widgets and not [containerNode](https://dojotoolkit.org/documentation/tutorials/1.7/templated/#containerNode). You can set custom attributes, access _this.domNode_ (reference to parent node of the widget itself) and manipulate with it in this method.
+- _startup_ - this is called when widget and all child widgets have been created. This is the place where to access child widgets.
 
 For more information on widget lifetime see these articles:
 - [Understanding _Widget](http://dojotoolkit.org/documentation/tutorials/1.6/understanding_widget/)
@@ -47,7 +47,7 @@ There are two ways how to build your widget - extend existing one or build new w
 To create new widget for EPiServer you will need:
 - Dojo widget JavaScript implementation
 - EPiServer editor descriptor class for your widget
-- configure module.config properly
+- properly configured module.config
 
 ## Dojo widget
 Let's start with simple Dojo widget. First version of [Dojo widget for Geta Tags](https://github.com/Geta/Tags/blob/v0.9.8/ClientResources/Scripts/Editors/TagsSelection.js) extends Dojo [MultiComboBox](http://dojotoolkit.org/reference-guide/1.9/dojox/form/MultiComboBox.html). It allows to select multiple values from autosuggestion and adds them as comma separated string to the input.
@@ -80,15 +80,17 @@ Let's start with simple Dojo widget. First version of [Dojo widget for Geta Tags
         });
     });
 
-Dojo uses AMD for structuring the application. First step is to call _define_ function and define what are your dependencies. In this case I am defining _declare_, _JsonRest_ and _MultiComboBox_ as my dependencies. All three are included in Dojo package and available in EPiServer. You can find all available Dojo modules in EPiServer VPP/appData folder: _Modules\Shell\3.0.1209\ClientResources_. Dojo module dependencies are passed in as a first parameter of _define_ function. Those are defined as an array of string paths to the modules. Second parameter of _define_ function is function which defines the module. The function has arguments with dependencies defined previously.
+Dojo uses AMD for structuring the application. First step is to call _define_ function and define what are your dependencies. In this case I am defining _declare_, _JsonRest_ and _MultiComboBox_. All three are included in Dojo package and available in EPiServer <sup>[1](#ref1)</sup>. Dojo module dependencies are passed in as a first parameter of _define_ function. Those are defined as an array of string paths to the modules.
 
-This function then should call _declare_ function which declares your widget. As a first parameter it takes an array of objects which will be mixed in to your new widget. You can think about this as extending the object you pass in. In this case we will use _MultiComboBox_. The second argument is object which defines your widget. Here you can override methods and properties of your base widget.
+Second parameter of _define_ function is function which defines the module. The function has arguments with dependencies defined previously. This function then should call _declare_ function which declares your widget.
+
+As a first parameter it takes an array of objects which will be mixed in to your new widget. You can think about this as extending the object you pass in. In this case we will use _MultiComboBox_. The second argument is object which defines your widget. Here you can override methods and properties of your base widget.
 
 For Geta Tags I needed to set _store_ property for _MultiComboBox_. The right method to override in this case is _postMixInProperties_. _store_ property defines the source for autosuggestion. To use some server side API as a source you have to define [_JsonRest_](http://dojotoolkit.org/reference-guide/1.9/dojo/store/JsonRest.html) object by passing in options object which should contain property - _target_ with URL to the resource. Then use _set_ method of base widget to set the _store_ property. The last step is to call [base implementation](http://dojotoolkit.org/reference-guide/1.9/dojo/_base/declare.html#calling-superclass-methods) of _postMixiInProperties_ by calling [_inherited(arguments)_](http://dojotoolkit.org/reference-guide/1.9/dojo/_base/declare.html#inherited) method that base widget can do it's stuff.
 
-_MultiComboBox_ has one issue that it do not handle the case when value provided to it is not defined. EPiServer usually do not provide initial value for the field and so _MultiComboBox_ can't handle it. To solve the issue I redefined __setValueAttr_ function of _MultiComboBox_ to set empty value if it is not defined. You can redefine your base widget methods if needed similar way, but be careful - those methods are _internal_ and might change in future versions of Dojo.
+_MultiComboBox_ has one issue that it do not handle the case when value provided to it is not defined. EPiServer usually do not provide initial value for the field so _MultiComboBox_ can't handle it. To solve the issue I redefined __setValueAttr_ function of _MultiComboBox_ to set empty value if it is not defined. You can redefine your base widget methods if needed similar way, but be careful - those methods are _internal_ and might change in future versions of Dojo.
 
-The last (or first) step is to place the JavaScript file in correct folder. Alls client scripts for EPiServer modules should be placed in _ClientResources_ folder. I would suggest to create new folder with the name of your module and place JavaScript implementation there. For example, _ClientResources/Simple.Module/_ folder. First versions of Geta Tags used _ClientResources/Scripts/Editors_ folder, but it might collide with other modules. After placing JavaScript module in the correct place, you should configure it to be found. First step is to add path to module in _module.config_.
+The last (or first) step is to place the JavaScript file in correct folder. All client scripts for EPiServer modules should be placed in _ClientResources_ folder. I would suggest to create new folder with the name of your module and place JavaScript implementation there. For example, _ClientResources/Simple.Module/_ folder. First versions of Geta Tags used _ClientResources/Scripts/Editors_ folder, but it might collide with other modules. After placing JavaScript module in the correct place, you should configure it that it will be loaded by EPiServer. First step is to add correct path to your module in _module.config_.
 
 ## <a name="module_config"></a>module.config
 
@@ -221,12 +223,8 @@ First of all I am extending Dojo TextBox widget and overriding _postCreate_ meth
 
 The widget implementation becomes much simpler and it is much easier to achieve better user experience with using custom plugins.
 
-# Packaging
-Describe nuget package creation - what is needed, command line call and also automating with TeamCity.
+# Summary
 
-Link: [link](https://github.com)
-Bold: **bold**
-Italic: _italic_
-Heading: # Heading
+Writing Dojo widget is not hard, but finding the way how to wire every piece together might make you spend hours and hours. Also now I can see that two different frameworks - Dojo and jQuery can play together and make great user experience. I hope this article will help others and me too to implement new Dojo widgets and not fear of extending EPiServer administration user interface.
 
-
+<a name="ref1"></a>1. You can find all available Dojo modules in EPiServer VPP/appData folder: _Modules\Shell\3.0.1209\ClientResources_.
