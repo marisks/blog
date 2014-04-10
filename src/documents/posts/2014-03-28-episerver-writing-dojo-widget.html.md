@@ -227,4 +227,6 @@ The widget implementation becomes much simpler and it is much easier to achieve 
 
 Writing Dojo widget is not hard, but finding the way how to wire every piece together might make you spend hours and hours. Also now I can see that two different frameworks - Dojo and jQuery can play together and make great user experience. I hope this article will help others and me too to implement new Dojo widgets and not fear of extending EPiServer administration user interface.
 
+<div class="well">
 <a name="ref1"></a>1. You can find all available Dojo modules in EPiServer VPP/appData folder: _Modules\Shell\3.0.1209\ClientResources_.
+</div>
