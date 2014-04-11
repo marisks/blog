@@ -96,7 +96,7 @@ The last (or first) step is to place the JavaScript file in correct folder. All 
 
 _module.config_ is configuration file for modules used in your project and should be placed in the root of your project (for shell modules in the root folder of [shell module](http://world.episerver.com/Documentation/Items/Developers-Guide/EPiServer-Framework/75/Modules/Modules/)). For more information see [module.config documentation](http://world.episerver.com/Documentation/Items/Developers-Guide/EPiServer-Framework/75/Configuration/Configuring-moduleconfig/).
 
-Basic configuration for Dojo module is simple - you have to register assembly of the project which defines [editor descriptor](#editor_descriptor) and register dojo module path. First version of Geta Tags module.config looked like this:
+Basic configuration for Dojo module is simple - you have to register assembly of the project which defines [editor descriptor](#editor_descriptor) and register path to your dojo module. First version of Geta Tags module.config looked like this:
 
     <?xml version="1.0" encoding="utf-8"?>
     <module>
@@ -126,14 +126,14 @@ Here is the Geta Tags editor descriptor:
         }
     }
 
-First of all create the class which derives from EditorDescriptor class. Decorate class with EditorDescriptorRegistration attribute and provide the type of the property and UIHint which will be used for properties which will use your custom Dojo module.
+Create the class which derives from EditorDescriptor class. Decorate class with EditorDescriptorRegistration attribute and provide the type of the property and UIHint. UIHint is just the string name of the UIHint attribute which you will use later on the content type's property. EPiServer checks the property's UIHint and EditorDescriptor's UIHint and applies the editor descriptor to the property if they match.
 
-Then in the constructor of the class set _ClientEditingClass_ which is in form of _module name_._path relative to module root_._Dojo module file name_. For Geta Tags this is _geta.editors.TagsSelection_:
+Then in the constructor of the class set _ClientEditingClass_ which is in form of _{module name}.{path relative to module root}.{Dojo module file name}_. For Geta Tags this is _geta.editors.TagsSelection_:
 - _geta_ is the module name we defined in [_module.config_](#module_config)
-- _editors_ is the folder relative to _Scripts_ folder which is defined as the root folder for module in [_module.config_](#module_config)
+- _editors_ is the folder relative to _Scripts_ folder (it is defined as the root folder for module in [_module.config_](#module_config))
 - _TagsSelection_ is Dojo module file name without extension
 
-After defining editor descriptor you can use your custom property in some content type:
+After defining editor descriptor you can use your custom property in content type:
 
     [UIHint("Tags")]
     public virtual string Tags { get; set; }
@@ -142,13 +142,13 @@ Just decorate your property with _UIHint_ attribute with value you defined in ed
 
 # Advanced implementation
 
-While you can create complex Dojo widgets yourself most of the times it is better and faster to use existing libraries. Dojo do not have much custom plugins, but jQuery and jQuery UI (and there are plenty of other libraries) has and it would be great to use them in your Dojo widgets. 
+While you can create complex Dojo widgets yourself, most of the times it is better and faster to use existing libraries. Dojo do not have much custom plugins, but jQuery and jQuery UI <sup>[2](#ref2)</sup> have and it would be great to use them in your Dojo widgets. 
 
 ## Referencing scripts and CSS stylesheets
 
-In usual Web project referencing script libraries is simple - just add script tags in your markup and start using the plugins, but in EPiServer Dojo implementation it is little bit different. In EPiServer administration interface you can't get to the markup and add scripts manually.
+In usual Web project referencing script libraries is simple - just add script tags in your markup and start using the plugins, but in EPiServer's Dojo implementation it is little bit different. You can't get to the markup and add scripts manually to EPiServer administration interface.
 
-There are two ways to use libraries - use CDN or use scripts from project. When you want to include the script in the project, you have to put them in your module folder which is defined in _module.config_, for example: _ClientResources/Geta.Tags_ . Same appliers for CSS. You can also organize them in subfolders. For example, Geta Tags have _styles_ folder for CSS and _vendor_ folder for 3rd party libraries:
+There are two ways to use libraries - use CDN or use scripts from project. When you want to include the script in the project, you have to put them in your module folder which is defined in _module.config_, for example: _ClientResources/Geta.Tags_ . Same applies for CSS. You can organize stylesheets and scripts in subfolders. For example, Geta Tags have _styles_ folder for CSS and _vendor_ folder for 3rd party libraries:
 
 ![File structure](/img/2014-04-11-episerver-writing-dojo-widget/file_structure.jpg)
 
@@ -187,20 +187,21 @@ Next step is informing EPiServer to load these scripts and stylesheets when EPiS
       </clientModule>
     </module>
 
-First of all define _clientResources_ section and add all scripts and styles using _add_ tag. For each resource define:
-- _name_ - this is used to distinguish between different resources. You can use different name for each resource or use same name to group resources. In the Geta Tags I used one name for scripts and other for styles.
+Define _clientResources_ section and add all scripts and styles using _add_ tag. For each resource define:
+- _name_ - this is used to distinguish between different resources. You can use different name for each resource or use same name for group of resources. In the Geta Tags I used one name for scripts and other for styles.
 - _resourceType_ - type of the resource - _Script_ or _Style_.
 - _sortIndex_ - the order in which resource will be rendered for resources with same name.
+- _path_ - path to the resource. The path can be full URL or local path. Full URL is useful to define resources from CDN. Local path is used for resources in your project. It is relative to _ClientResources_ folder.
 
 After that you have to define loading of these resources:
-- define _moduleDependencies_ section under _clientModule_ section and add dependency on _CMS_ with type _RunAfter_. _RunAfter_ will inform EPiServer to render resources after EPiServer administration is loaded.
-- define _requiredResources_ section under _clientModule_ section and add the names of your defined _clientResources_ here.
+- define _moduleDependencies_ section under _clientModule_ section and add dependency on _CMS_ with type _RunAfter_. _RunAfter_ will inform EPiServer to render resources after EPiServer administration is loaded. If you skip this configuration, then your resources will not be loaded at all.
+- define _requiredResources_ section under _clientModule_ section and add the names of your defined _clientResources_.
 
 This is all we need to get your scripts loaded.
 
 ## Using jQuery plugin in Dojo widget
 
-When you have all libraries in place, it is quite easy to start using them. Each Dojo widget hase _domNode_ which can be used to access widget's DOM node using jQuery. That means that jQuery plugin can be attached to that DOM node. In Geta Tags I am using [tag-it](https://github.com/aehlke/tag-it) jQuery UI plugin to handle multiple tags:
+When you have all libraries in place, it is easy to start using them. Each Dojo widget hase _domNode_ which can be used to access widget's DOM node using jQuery. It means that jQuery plugin can be attached to this DOM node. In Geta Tags I am using [tag-it](https://github.com/aehlke/tag-it) jQuery UI plugin to handle multiple tags:
 
     define([
         "dojo/_base/declare",
@@ -219,14 +220,15 @@ When you have all libraries in place, it is quite easy to start using them. Each
         });
     });
 
-First of all I am extending Dojo TextBox widget and overriding _postCreate_ method with my implementation. _postCreate_ in this case is the most approptate place to put your functionality because I can access _domNode_ here. Dojo TextBox HTML has several wrappers around _input_ so I have to find input there and I am using jQuery for that. After that I am applying Tag-it plugin on the input field.
+First of all I am extending Dojo TextBox widget and overriding _postCreate_ method with my implementation. _postCreate_ in this case is the most appropriate place to put your functionality, because I can access _domNode_ here. Dojo TextBox HTML has several wrappers around _input_ so I have to find input and I am using jQuery for that. After that I am applying Tag-it plugin on the input field.
 
-The widget implementation becomes much simpler and it is much easier to achieve better user experience with using custom plugins.
+The widget implementation becomes much simpler and it is much easier to achieve better user experience using custom plugins.
 
 # Summary
 
-Writing Dojo widget is not hard, but finding the way how to wire every piece together might make you spend hours and hours. Also now I can see that two different frameworks - Dojo and jQuery can play together and make great user experience. I hope this article will help others and me too to implement new Dojo widgets and not fear of extending EPiServer administration user interface.
+Writing Dojo widget is not hard, but finding the way how to wire every piece together might take hours and hours. Also now I can see that two different frameworks - Dojo and jQuery can play together and make great user experience. I hope this article will help others and me too to implement new Dojo widgets and not fear of extending EPiServer administration user interface.
 
 <div class="well">
-<a name="ref1"></a>1. You can find all available Dojo modules in EPiServer VPP/appData folder: _Modules\Shell\3.0.1209\ClientResources_.
+<a name="ref1"></a>1. You can find all available Dojo modules in EPiServer VPP/appData folder: _Modules\Shell\3.0.1209\ClientResources_.<br>
+<a name="ref2"></a>2. You are not limited to jQuery - use any JavaScript library you want.
 </div>
