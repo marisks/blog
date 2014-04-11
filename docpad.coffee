@@ -74,6 +74,11 @@ docpadConfig = {
 	collections:
 		posts: ->
 			@getCollection("documents").findAllLive({relativeDirPath: 'posts'}, [date: -1])
+				.setFilter 'visible', (model) ->
+					visible = model.get('visible')
+					if visible? then visible else true
+
+
 
 	# =================================
 	# DocPad Events

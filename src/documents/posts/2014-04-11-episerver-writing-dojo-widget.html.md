@@ -5,6 +5,7 @@ description: "I was working on open source library <a href=\"https://github.com/
 category: [# EPiServer]
 tags: [EPiServer, Dojo]
 date: 2014-04-11
+visible: false
 ---
 
 <p class="lead">
