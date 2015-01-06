@@ -78,6 +78,17 @@ docpadConfig = {
 					visible = model.get('visible')
 					if visible? then visible else true
 
+		episerverPosts: ->
+			@getCollection("documents").findAllLive({relativeDirPath: 'posts'}, [date: -1])
+				.setFilter 'visible', (model) ->
+					visible = model.get('visible')
+					if visible? then visible else true
+				.setFilter 'tags', (model) ->
+					tags = model.get('tags')
+					return false unless tags? and Array.isArray(tags)
+					for tag in tags
+						if tag.toLowerCase() is 'episerver' then return true
+					false
 
 
 	# =================================
@@ -124,6 +135,9 @@ docpadConfig = {
 			default:
 				collection: 'posts'
 				url: '/rss.xml'
+			episerver:
+				collection: 'episerverPosts'
+				url: '/episerver-rss.xml'
 }
 
 # Export our DocPad Configuration
