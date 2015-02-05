@@ -17,11 +17,21 @@ I am mainly Web developer and haven't created much desktop applications. I start
 
 Sample project described in this article is simple game score board. You can increase/decrease score for each team and reset score to zero when starting new game.
 
-# MVVM
-
 Creating new WPF project in F# is easy. You just have to install Visual Studio extension - [F# Empty Windows App](https://visualstudiogallery.msdn.microsoft.com/e0907c99-bb04-4eb8-9692-9333d5ff4399). Then create new project using _F# Empty Windows App_ template.
 
 <img src="/img/2015-02/new-fsharp-wpf-project.png" alt="New Project dialog" class="img-responsive">
+
+After creating new project you will have basic WPF project structure.
+
+<img src="/img/2015-02/wpf-project-structure.png" alt="Project structure" class="img-responsive">
+
+Project template also installs few NuGet packages which will help you to work with Xaml and ViewModel for MVVM.
+
+<img src="/img/2015-02/wpf-nuget-dependences.png" alt="NuGet dependences" class="img-responsive">
+
+Now you can start building your application.
+
+# MVVM
 
 
 
