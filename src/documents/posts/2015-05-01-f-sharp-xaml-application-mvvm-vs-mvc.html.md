@@ -5,7 +5,7 @@ description: "Most popular approach for creating Xaml applications is MVVM - Mod
 category: [F#]
 tags: [F#, Xaml]
 date: 2015-02-01
-visible: true
+visible: false
 ---
 
 <p class="lead">
@@ -29,9 +29,12 @@ Project template also installs few NuGet packages which will help you to work wi
 
 <img src="/img/2015-02/wpf-nuget-dependences.png" alt="NuGet dependences" class="img-responsive">
 
-Now you can start building your application.
+Now you can start building your application. First of all let's create Xaml view for our application. The view will be same for both MVVM and MVC application with minimal differences. It should display score for both teams, there should be the buttons to increase and decrease (to fix mistaken increase) score and there should be the button to start new game. This wireframe shows how it should look like.
+
+![Wireframe of score board]()
 
 # MVVM
+
 
 
 
