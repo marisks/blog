@@ -12,36 +12,44 @@ visible: true
 I was working in EPiServer Commerce project on product import and thought that it would be great to use Azure infrastructure to make import process more reliable and consume less resources of Web server. In this article I am describing sample project using Azure Service Bus Queues and Worker Roles for this task.
 </p>
 
-In my current _EPiServer Commerce_ solution import was done using custom _Scheduled Jobs_ which are resource intensive. Jobs has to be run at night to not decrease performance of Web servers. When something fails during import process those should start from beginning and only next night. It is not good solution in global world where applications should run 24/7 and should perform well any time. Udi Dahan describes this issue well in article [Status fields on entities - HARMFUL?](http://particular.net/blog/status-fields-on-entities-harmful). I created sample CMS site with page import to test such architecture.
+In my current _EPiServer Commerce_ solution import is done using custom _Scheduled Jobs_ which are resource intensive. Jobs has to be run at night to not decrease performance of Web servers. When something fails during import process _Scheduled Jobs_ should start from beginning and only next night. It is not good solution in global world where applications should run 24/7 and should perform well any time. Udi Dahan describes this issue well in article [Status fields on entities - HARMFUL?](http://particular.net/blog/status-fields-on-entities-harmful). I created sample _EPiServer CMS_ site with page import to test such architecture.
 
 # Sample site
 
-I am not going to create EPiServer Commerce site for this demo, but use CMS site as the main idea for data import is same.
+I am not going to create _EPiServer Commerce_ site for this demo, but use CMS site as the main idea for data import remains same.
 
-I have described new EPiServer CMS project creation and hosting on Azure in previous [blog post](/2015/04/11/episerver-cms-site-as-azure-web-app/). Additionaly there are added simple start page and article page types to the project. Source code for the site and whole solution can be found on [GitHub](https://github.com/marisks/NewsSite). For data import test I am going to import article pages from CSV file. Here is sample CSV file format:
+I have described new _EPiServer CMS_ project creation and hosting on _Azure_ in previous [blog post](/2015/04/11/episerver-cms-site-as-azure-web-app/). Additionaly there are added simple start page and article page types to the project. Source code for the site and whole solution can be found on [GitHub](https://github.com/marisks/NewsSite). For data import test I am going to import article pages from CSV file. Here is sample CSV file format:
 
     Name,Intro,Content,ImageUrl
     "The Car","The Car was presented today","Today the greatest of cars was presented - <b>The Car</b>.",http://www.publicdomainpictures.net/pictures/100000/velka/vintage-convertible-automobile.jpg
 
 # Solution architecture
 
-The CSV file is uploaded onto Azure Storage. EPiServer Scheduled Job time to time looks for added import files. When file appears, it creates Service Bus message with file information and publishes onto the file import queue. File import Worker gets messages from file import queue, reads file from Storage, parses it and creates messages with article data (one message per article). Then it publishes messages with article data onto the article import queue. Second Worker - article import worker gets messages from article import queue and posts them to Web API endpoint on EPiServer site where new articles get created.
+<img src="/img/2015-04/azure_episerver_import_arch.png" alt="Azure EPiServer import architecture" class="img-responsive">
 
---- Put architecture image here
+1. The CSV file is uploaded onto _Azure Storage_. 
+2. _EPiServer_ _Scheduled Job_ time to time looks for added import files. 
+3. When file appears, it creates _Service Bus_ message with file information and publishes onto the file import queue. 
+4. File import _Worker_ gets messages from file import queue, 
+5. reads file from _Storage_, 
+6. parses it and creates messages with article data (one message per article). 
+7. Then it publishes messages with article data onto the article import queue. 
+8. Second _Worker_ - article import worker gets messages from article import queue 
+9. and posts them to _Web API_ endpoint on _EPiServer_ site where new articles get created.
 
-In this sample architecture we can see that any data transformation, file download/processing tasks can be moved to Workers. Such Workers can run paralelly and their throughput can be increased or decreased by needs. Also it offloads main EPiServer site from background processing tasks.
+In this sample architecture we can see that any data transformation, file download/processing tasks can be moved to _Workers_. Such _Workers_ can run paralelly and their throughput can be increased or decreased by needs or configured to autoscale. Also it offloads main _EPiServer_ site from background processing tasks.
 
 # Storage for import data
 
-When running Web application on Azure there is no available file system for storing large amount of data, but data for import has to be uploaded somehow to the system for processing. In on-premise solution easiest way is to configure FTP. 
+When running Web application on _Azure_ there is no available file system for storing large amount of data and it has to be uploaded somehow to the system for processing. In on-premise solution easiest way is to have separated disk for data and configure FTP for upload. In _Azure_ I can use _Azure Storage_.
 
-In Azure I have to use Azure Storage. There are multiple ways how to upload import files to it. You can create the page for import file upload and use [Storage API](http://azure.microsoft.com/en-us/documentation/articles/storage-dotnet-how-to-use-blobs/) or use some tool. In this article I am going to use [AzCopy](http://azure.microsoft.com/en-us/documentation/articles/storage-use-azcopy/) tool.
+There are multiple ways how to upload import files to it. You can create the page for import file upload and use [Storage API](http://azure.microsoft.com/en-us/documentation/articles/storage-dotnet-how-to-use-blobs/) or use some tool. In this article I am going to use [AzCopy](http://azure.microsoft.com/en-us/documentation/articles/storage-use-azcopy/) tool.
 
-I already have created storage for EPiServer CMS and will use it for import data too, but I will add separate container and will call it _epiimportdata_.
+I already have created storage for _EPiServer CMS_ and will use it for import data too, but I will add separate container and will call it _epiimportdata_.
 
 <img src="/img/2015-04/azure_storage_new_container.png" alt="Azure new Storage container view" class="img-responsive">
 
-After container created I can use AzCopy to upload the file which is located on my computer - _D:\Temp\data\articles.csv_. Provide source directory for AzCopy, destination container URL and destination Storage primary or secondary key.
+After container has been created I can use _AzCopy_ to upload the file which is located on my computer - _D:\Temp\data\articles.csv_. Provide source directory for _AzCopy_, destination container URL and destination _Storage_ primary or secondary key.
 
     PS D:\Temp> AzCopy /Source:D:\Temp\data\ /Dest:https://epinewssite.blob.core.windows.net/epiimportdata /DestKey:{key} /S
     Finished 1 of total 1 file(s).
@@ -53,7 +61,7 @@ After container created I can use AzCopy to upload the file which is located on 
     Transfer failed:         0
     Elapsed time:            00.00:00:01
 
-After upload completed you can view files in Azure Portal.
+After upload completed you can view files in _Azure Portal_.
 
 <img src="/img/2015-04/azure_storage_file_view.png" alt="Azure Storage Container file view" class="img-responsive">
 
@@ -61,9 +69,9 @@ After upload completed you can view files in Azure Portal.
 
 ## EPiServer Scheduled Job for Storage monitoring
 
-When file is uploaded to the Storage, system should start processing it. There are several ways to crate Storage container file monitoring, for example, using [WebJob](http://stackoverflow.com/a/22053735/660154).
+When file is uploaded to the _Storage_, system should start processing it. There are several ways to crate Storage container file monitoring, for example, using [WebJob](http://stackoverflow.com/a/22053735/660154).
 
-I created EPiServer Scheduled Job which is running periodically and watching for new files in Storage. It uses Azure [Storage API](http://azure.microsoft.com/en-us/documentation/articles/storage-dotnet-how-to-use-blobs/) to list files and creates file DTO objects with file (blob) data - Name and URL. Then it creates message to publish on _ImportQueue_ queue in ServiceBus.
+I created _EPiServer_ _Scheduled Job_ which is running periodically and watching for new files in _Storage_. It uses [Azure Storage API](http://azure.microsoft.com/en-us/documentation/articles/storage-dotnet-how-to-use-blobs/) to list files and creates file DTO objects (_ImportFile_) with file (blob) data - _Name_ and _URL_. Then it creates message to publish on _ImportQueue_ queue in _ServiceBus_.
 
     [ScheduledPlugIn(DisplayName = "Init import", SortIndex = 2000)]
     public class ImportInitializationJob : JobBase
@@ -102,11 +110,11 @@ I created EPiServer Scheduled Job which is running periodically and watching for
         }
     }
 
-I am reusing EPiServer Azure blob storage, but creating separate container. In production system you would like to move processed files to another container or other path before sending message to the queue that next time when Scheduled Job is running, it will not load same file again.
+I am reusing _EPiServer_ _Azure Storage_, but creating separate container. In production system you would like to move processed files to another container or other path before sending message to the queue, that next time when _Scheduled Job_ is running, it will not load same file again.
 
-For DTO objects I created separate library project called _Contracts_. I am referencing it in all projects which produces or consumes messages from queue.
+For DTO objects I created separate library project called _Contracts_. I am referencing it in all projects which produces or consumes messages from queues.
 
-_QueueConnector_ in this example is taken from article [.NET Multi-Tier Application Using Service Bus Queues](http://azure.microsoft.com/en-us/documentation/articles/cloud-services-dotnet-multi-tier-app-using-service-bus-queues/). I just changed queue name and created namespace manager from connection string. I reused same ServiceBus namespace as used for EPiServer.
+_QueueConnector_ in this example is taken from article [.NET Multi-Tier Application Using Service Bus Queues](http://azure.microsoft.com/en-us/documentation/articles/cloud-services-dotnet-multi-tier-app-using-service-bus-queues/). I just changed queue name and created namespace manager from connection string. I reused same _ServiceBus_ namespace as used for _EPiServer_ - _epinewssite_.
 
     public static class QueueConnector
     {
@@ -125,7 +133,6 @@ _QueueConnector_ in this example is taken from article [.NET Multi-Tier Applicat
 
         public static void Initialize()
         {
-            // Using Http to be friendly with outbound firewalls
             ServiceBusEnvironment.SystemConnectivity.Mode =
                 ConnectivityMode.Http;
 
@@ -143,33 +150,33 @@ _QueueConnector_ in this example is taken from article [.NET Multi-Tier Applicat
         }
     }
 
-Now can try and run Scheduled Job. Deploy new version of Web site to Azure and run Sheduled Job. Then in [old Azure Portal](https://manage.windowsazure.com) click Service Bus in the menu on the left and from the list choose namespace.
+Now can try and run _Scheduled Job_. Deploy new version of Web site to _Azure_ and run _Sheduled Job_. Then in [old Azure Portal](https://manage.windowsazure.com) click _Service Bus_ in the menu on the left and from the list choose namespace.
 
 <img src="/img/2015-04/azure_service_bus_connection.png" alt="Azure Service Bus view" class="img-responsive">
 
-Then open _Queues_ tab and you should see that in _importqueue_ _QUEUE LENGTH_ column is _1_.
+Then open _Queues_ tab and you should see that in _importqueue_ _QUEUE LENGTH_ column has value _1_.
 
 <img src="/img/2015-04/azure_service_bus_importqueue.png" alt="Azure Service Bus import queue view" class="img-responsive">
 
 ## Import file Worker
 
-First of all I have to create Azure Cloud Service project.
+First of all I have to create _Azure Cloud Service_ project.
 
 <img src="/img/2015-04/new_azure_cloud_service.png" alt="New Azure Cloud Service dialog" class="img-responsive">
 
-Then choose to create Worker Role with Service Bus Queue and rename it by clicking on small pencil on the right and type it's name.
+Then choose to create _Worker Role with Service Bus Queue_ and rename it by clicking on small pencil on the right and type it's name.
 
 <img src="/img/2015-04/new_worker_role.png" alt="New Worker Role dialog" class="img-responsive">
 
-Two new projects will be created - Worker Role project and Azure Cloud Service project. Azure Cloud Service project contains all needed configuration and also is responsible for deployment to Azure.
+Two new projects will be created - _Worker Role_ project and _Azure Cloud Service_ project. _Azure Cloud Service_ project contains all needed configuration and also is responsible for deployment to _Azure_.
 
-Worker Role project contains _WorkerRole.cs_ which is starting point. As I created Worker Role with Service Bus Queue it already contains code to handle messages from queue.
+_Worker Role_ project contains _WorkerRole.cs_ which is starting point. As I created _Worker Role with Service Bus Queue_ it already contains code to handle messages from queue.
 
-First of all I am going to configure connection strings for Service Bus and Storage. In the Azure Cloude Service project, right-click on the Worker Role under Roles folder and select Properties. Then select Settings tab on the left. There is already setting for Service Bus Queuer, but I have to change it to my service bus connection string. Then I also added Storage connection string.
+First of all I am going to configure connection strings for _Service Bus_ and _Storage_. In the _Azure Cloud Service_ project, right-click on the _Worker Role_ under _Roles_ folder and select _Properties_. Then select _Settings_ tab on the left. There is already setting for _Service Bus Queue_, but I have to change it to my _Service Bus_ connection string. Then I also added _Storage_ connection string.
 
 <img src="/img/2015-04/worker_role_settings.png" alt="Worker Role settings dialog" class="img-responsive">
 
-In WorkerRole.cs OnStart method configure two ServiceBus clients - one for incomming messages and other for outgoing. In production system you might have multiple incoming and outgoing messages, but for this example I use one one for each direction. To read Worker Role settings I am using CloudConfigurationManager.
+In _WorkerRole.cs_ _OnStart_ method configure two _Service Bus_ clients - one for incomming messages and other for outgoing. In production system you might have multiple incoming and outgoing messages, but for this example I use one one for each direction. To read _Worker Role_ settings I am using _CloudConfigurationManager_.
 
     const string InQueueName = "ImportQueue";
     const string OutQueueName = "ImportArticleQueue";
@@ -198,7 +205,7 @@ In WorkerRole.cs OnStart method configure two ServiceBus clients - one for incom
         return base.OnStart();
     }
 
-Then I created method to initialize Storage Container.
+Then I created method to initialize _Storage Container_.
 
     private const string ContainerName = "epiimportdata";
 
@@ -213,7 +220,7 @@ Then I created method to initialize Storage Container.
         return container;
     }
 
-Now I am rady to consume messages. Execution of the worker is done in _Run_ method. First of all I am reading message into my DTO - _ImportFile_, then getting blob reference for file by it's name. I am reading and parsing CSV file in _ReadArticles_ method and creating sequence of Artice DTOs. When it's done publish Article DTOs on outgoing Queue.
+Now I am rady to consume messages. Execution of the worker is done in _Run_ method. First of all I am reading message into my DTO - _ImportFile_, then getting blob reference for file by it's name. I am reading and parsing CSV file in _ReadArticles_ method and creating sequence of _Artice_ DTOs. When it's done publish _Article_ DTOs on outgoing queue.
 
     public override void Run()
     {
@@ -250,7 +257,7 @@ Now I am rady to consume messages. Execution of the worker is done in _Run_ meth
         CompletedEvent.WaitOne();
     }
 
-For CSV parsing I did simple string splitting, but in production system probably I would use some library to do it, for example, [CSV helper](http://joshclose.github.io/CsvHelper/).
+For CSV parsing I am just reading file line by line and split columns by comma, but in production solution I probably would use some library to do it, for example, [CSV helper](http://joshclose.github.io/CsvHelper/).
 
     private static IEnumerable<Article> ReadArticles(CloudBlockBlob blob)
     {
@@ -277,25 +284,25 @@ For CSV parsing I did simple string splitting, but in production system probably
         }
     }
 
-Now Worker is ready for deployment. Right-click on Azure Cloud Service project and choose Publish. Sign in by providing credentials, create new cloud service - provide name and region.
+Now _Worker_ is ready for deployment. Right-click on _Azure Cloud Service_ project and choose _Publish_. Sign in by providing credentials and create new cloud service - provide name and region.
 
 <img src="/img/2015-04/create_cloud_service.png" alt="Create Cloud Service dialog" class="img-responsive">
 
-Then choose environment - Staging or Production, build configuration and service configuration.
+Then choose environment - _Staging_ or _Production_, build configuration and service configuration.
 
 <img src="/img/2015-04/cloud_service_publishing_settings.png" alt="Cloud Service publishing settings dialog" class="img-responsive">
 
-After all settings are configured click Publish. You can see progress in Azure Activity Log.
+After all settings are configured click _Publish_. You can see progress in _Azure Activity Log_.
 
 <img src="/img/2015-04/cloud_service_publishing.png" alt="Azure Activity Log dialog" class="img-responsive">
 
-Deployment will take quite a lot of time. After deployment finished, worker will run automatically and will consume messages from queue. Now we should have two queues and second queue will contain one message.
+Deployment will take quite a lot of time. After deployment finished, _Worker_ will run automatically and will consume messages from queue. Now we should have two queues and second queue will contain one message.
 
 <img src="/img/2015-04/azure_service_bus_importarticlequeue.png" alt="Azure Service Bus queue view" class="img-responsive">
 
 ## Import articles Worker
 
-For Article import I will create another worker. Follow same steps as for first worker - create new Worker Role with Service Bus, configure Service Bus connection string, but skip Storage configuration as I will not use it in new Worker. Also I will need only one Queue for incomming Article messages.
+For article import I will create another _Worker_. Follow same steps as for first _Worker_ - create new _Worker Role with Service Bus_, configure _Service Bus_ connection string, but skip _Storage_ configuration as I will not use it in new _Worker_. Also I will need only one queue for incomming _Article_ messages - _ImportArticleQueue_.
 
     const string InQueueName = "ImportArticleQueue";
 
@@ -316,7 +323,7 @@ For Article import I will create another worker. Follow same steps as for first 
         return base.OnStart();
     }
 
-Then I am going to consume Article messages and just post to Web API end-point which I created in EPiServer Site.
+Then I am going to consume _Article_ messages and just post to _Web API_ end-point which I created in _EPiServer_ site.
 
     public override void Run()
     {
@@ -357,7 +364,7 @@ Then I am going to consume Article messages and just post to Web API end-point w
         return client;
     }
 
-Web API controller just creates new page if it does not exist yet.
+_Web API_ controller just creates new page if it does not exist yet.
 
     public void Post(Article article)
     {
@@ -379,9 +386,10 @@ Web API controller just creates new page if it does not exist yet.
         _contentRepository.Save(newArticlePage, SaveAction.Publish, AccessLevel.NoAccess);
     }
 
-Now publish Cloud Service again and will see that message disappears from queue and in EPiServer CMS new article appears.
+Now publish _Cloud Service_ again and will see that message disappears from queue and new article appears in _EPiServer CMS_. Import process is created and working.
 
 # Summary
 
+For smaller tasks like in this example, it might not be reasonable to use all this infrastructure and simpler solution would be just creating some _Scheduled Job_ or page for data upload and import. But more complex import process could benefit from such solution. For example, such process might require to transform product CSV file, download sales data from 3rd party service, download images and thumbnails from media service and in the result package all data and import with [EPiServer Commerce Service API](http://world.episerver.com/documentation/Items/EPiServer-Service-API/).
 
-
+_Azure_ might not only improve your import process. I was using _Azure Storage_ and _Service Bus Queues_, but there are available lot more [services](http://azure.microsoft.com/en-us/overview/what-is-azure/) you can use for your solution needs. Just use them when needed.
