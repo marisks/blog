@@ -4,8 +4,8 @@ title: "F# Xaml application - MVVM vs MVC"
 description: "Most popular approach for creating Xaml applications is MVVM - Model View ViewModel. But there is an alternative - MVC (Model View Controller). So what are advantages of using one or another in your F# projects?"
 category: [F#]
 tags: [F#, Xaml]
-date: 2015-02-01
-visible: false
+date: 2015-04-27
+visible: true
 ---
 
 <p class="lead">
@@ -13,7 +13,8 @@ Most popular approach for creating Xaml applications is MVVM - Model View ViewMo
 </p>
 
 # Introduction
-I am mainly Web developer and haven't created much desktop applications. I started some toy project and wanted to try creating desktop application in WPF. I wanted to follow best practices and started to look what approaches are used to build Xaml apps. Most common choice is [MVVM](http://en.wikipedia.org/wiki/Model_View_ViewModel), but recently I was reading the book [F# Deep Dives](http://www.manning.com/petricek2/) where [Dmitry Morozov](https://twitter.com/mitekm) described [MVC](http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) approach. Thanks to the [FsXaml type provider](https://github.com/fsprojects/FsXaml) implementing both approaches now is really easy.
+
+I am mainly Web developer and haven't created much desktop applications. I started some toy project and wanted to try creating desktop application in WPF. I wanted to follow best practices and started to look what approaches are used to build Xaml apps. Most common choice is [MVVM](http://en.wikipedia.org/wiki/Model_View_ViewModel), but recently I was reading the book [F# Deep Dives](http://www.manning.com/petricek2/) where [Dmitry Morozov](https://twitter.com/mitekm) described [MVC](http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) way. Thanks to the [FsXaml type provider](https://github.com/fsprojects/FsXaml) implementing both approaches now is really easy.
 
 Sample project described in this article is simple game score board. You can increase/decrease score for each team and reset score to zero when starting new game.
 
@@ -29,9 +30,11 @@ Project template also installs few NuGet packages which will help you to work wi
 
 <img src="/img/2015-02/wpf-nuget-dependences.png" alt="NuGet dependences" class="img-responsive">
 
-Now you can start building your application. First of all let's create Xaml view for our application. The view will be same for both MVVM and MVC application with minimal differences. It should display score for both teams, there should be the buttons to increase and decrease (to fix mistaken increase) score and there should be the button to start new game. This wireframe shows how it should look like.
+Now you can start building your application. First of all let's create Xaml view for our application. The view will be same for both MVVM and MVC application with minimal differences. It should display score for both teams, there should be the buttons to increase and decrease (to fix mistaken increase) score and there should be the button to start new game. 
 
-![Wireframe of score board]()
+<img src="/img/2015-02/gasby_main_window.png" alt="Game score board main window" class="img-responsive">
+
+For application styling I am using [mahapps.metro](http://mahapps.com/) UI toolkit for WPF.
 
 # MVVM
 
