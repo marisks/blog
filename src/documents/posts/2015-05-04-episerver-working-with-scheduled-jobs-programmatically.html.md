@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "EPiServer: working with Scheduled Jobs programmatically"
-description: "EPiServer provides Scheduled Jobs to run background tasks on schedule. By default those has simple scheduling available, but sometimes you might need more advanced scheduling techniques. EPiServer provides API for that."
+description: "EPiServer provides Scheduled Jobs to run background tasks on schedule. By default those have simple scheduling available, but sometimes you might need more advanced scheduling techniques. EPiServer provides API for that."
 category: [EPiServer]
 tags: [EPiServer]
 date: 2015-05-04
@@ -9,7 +9,7 @@ visible: true
 ---
 
 <p class="lead">
-EPiServer provides Scheduled Jobs to run background tasks on schedule. By default those has simple scheduling available, but sometimes you might need more advanced scheduling techniques. EPiServer provides API for that.
+EPiServer provides Scheduled Jobs to run background tasks on schedule. By default those have simple scheduling available, but sometimes you might need more advanced scheduling techniques. EPiServer provides API for that.
 </p>
 
 In older versions _EPiServer_ had used _ScheduledJob_ class as [active record](http://en.wikipedia.org/wiki/Active_record_pattern) to manipulate _Scheduled Jobs_, but now all _active record_ methods became obsolete. New way of working with _Scheduled Jobs_ is using _ScheduledJobRepository_. It provides several methods to get and store _Scheduled Jobs_ which might be useful:
@@ -52,7 +52,7 @@ And to take some action there are two methods.
 * _Stop()_ - to stop the job if it is stoppable - _IsStoppable_ property is _true_
 * _ExecuteManually()_ - to run job programmatically by skipping scheduling (I would better schedule it anyway).
 
-And here are few examples how it can be used. In both examples I am using _Injected_ class to get _ScheduledJobRepository_ instance injected in the property (_Scheduled Jobs_ do not support constructor injection). In first example I am using my extension method to get _Scheduled Job_ by it's type. First example schedules another _Scheduled Job_ to run after 10 seconds and second example schedules itself to run after 10 seconds. In second example I am getting _Scheduled Job_ by it's ID which is instance property - _ScheduledJobId_.
+And here are few examples how it can be used. In both examples I am using _Injected_ class to get _ScheduledJobRepository_ instance injected in the property (_Scheduled Jobs_ do not support constructor injection). In first example I am using my extension method to get _Scheduled Job_ by it's type. First example schedules another _Scheduled Job_ to run after 10 seconds and second example schedules itself to run after 10 seconds. In second example I am getting _Scheduled Job_ by it's ID which is instance's property - _ScheduledJobId_.
 
     [ScheduledPlugIn(DisplayName = "I shedule other job", SortIndex = 1000)]
     public class OtherJobScheduling : JobBase
