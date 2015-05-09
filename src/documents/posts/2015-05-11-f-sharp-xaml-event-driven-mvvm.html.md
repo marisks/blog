@@ -23,6 +23,7 @@ User interface remains same as in [previous version](/2015/04/27/f-sharp-xaml-ap
 # Event driven MVVM
 
 First of all define model. It is simple record type with two values for score for two teams. 
+
     type Score = {
         ScoreA: int
         ScoreB: int
