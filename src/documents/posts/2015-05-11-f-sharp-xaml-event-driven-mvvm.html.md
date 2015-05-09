@@ -86,7 +86,7 @@ Scoring application has simple events one per command, so just create command by
     member self.DecB = self.Factory.EventValueCommand(DecB)
     member self.NewGame = self.Factory.EventValueCommand(New)
 
-Now everything is ready - run application and verify that everything works.
+Now everything is ready - run application and verify that it works.
 
 You can find full source code for this version of application on [GitHub](https://github.com/marisks/evented_mvvm/tree/basic).
 
