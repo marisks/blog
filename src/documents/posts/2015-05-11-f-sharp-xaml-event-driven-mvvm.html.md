@@ -152,3 +152,6 @@ You can find full source code for this version of application on [GitHub](https:
 # Summary
 
 I like event driven _MVVM_. It makes code easy to extend as you saw in second example. Application's view model is responsible for model and event binding, but controller for model changes _functional_ way. Extracting controller is not the only option to improve your _MVVM_ application - you could inject some event filtering functions, event subscribers, separate controllers for separate events etc. based on your application needs. You can make application to look like _MVC_, but have no enforcement from some framework on how to implement it because _FSharp.ViewModule_ is [library and not a framework](http://tomasp.net/blog/2015/library-frameworks/).
+
+**UPDATE**
+_Reed Copsey_ did refacoring of my application. Source code for refactored sample can be found [here](https://github.com/marisks/evented_mvvm/tree/mvc_refactored).
