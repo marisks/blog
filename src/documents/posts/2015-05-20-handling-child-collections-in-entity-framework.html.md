@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Handling child collections in Entity Framework"
-description: "Configuring Entity Framework through fluent API sometimes is quite hard. In this article I am showing how to configure it to handle entity's child collections that those propertly gets added and removed from collection."
+description: "Configuring Entity Framework through fluent API sometimes is quite hard. In this article I am showing how to configure it to handle entity's child collections that those properly gets added and removed from collection."
 category: [Entity Framework]
 tags: [Entity Framework]
 date: 2015-05-20
@@ -9,7 +9,7 @@ visible: true
 ---
 
 <p class="lead">
-----
+Configuring Entity Framework through fluent API sometimes is quite hard. In this article I am showing how to configure it to handle entity's child collections that those properly gets added and removed from collection.
 </p>
 
 # Sample model
@@ -37,7 +37,7 @@ And here is DB Context for this model.
 
 With this model in place I want an _Order_ to be responsible for child collection - when I save _Order_ also _OrderItems_ should be saved, when I remove item from collection and save _Order_, removed item should be deleted in database.
 
-With default configuration it only adds items - creates new _OrderItem_ in DB and "links" it to _Order_. But when you remove item from collection it just removes relationship between _Order_ and _OrderItem_. _OrderItem_ table in DB will still contain removed _OrderItem_, but with _NULL_ _OrderId_ column.
+With default configuration it only adds items - creates new _OrderItem_ in DB and _links_ it to _Order_. But when you remove item from collection it just removes relationship between _Order_ and _OrderItem_. _OrderItem_ table in DB will still contain removed _OrderItem_, but with _NULL_ in _OrderId_ column.
 
 # Solution
 
