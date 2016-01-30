@@ -11,6 +11,94 @@ visible: true
   EPiServer allows us to group content's properties into different tabs using _GroupName_ parameter on _DisplayAttribute_. While it works fine, it doesn't order tabs I want. In this article, I will show a simple declarative way to control tab ordering.
 </p>
 
+# Update
+
+As pointed in the comments since _EPiServer 8_ there is a simpler way to define tab ordering. Just declare a static class with constant fields which will be the names of the tabs, add _GroupDefinitions_ attribute to the class and use _DisplayAttribute's_ _Order_ property to define an index of the tab. My previous example now looks like this:
+
+```
+[GroupDefinitions]
+public static class TabNames
+{
+    [Display(Order = 100)]
+    public const string Sidebar = "Sidebar";
+
+    [Display(Order = 110)]
+    public const string Description = "Description";
+}
+```
+
+Now use those in the content type:
+
+```
+[ContentType(GUID = "a35c0203-e548-4918-b932-05205cc8c491", Order = 1)]
+public class StandardPage : EditorialPageBase
+{
+    [Display(Name = "Text", Order = 10, GroupName = TabNames.Description)]
+    public virtual string Text { get; set; }
+
+    [Display(Name = "Sidebar", Order = 10, GroupName = TabNames.Sidebar)]
+    public virtual ContentArea SidebarContentArea { get; set; }
+}
+```
+
+And here is the result:
+
+<img src="/img/2016-01/custom-tab-1.png" alt="Sidebar tab on the left and Description tab on the right." class="img-responsive">
+
+Then try to change indexes of the tab names:
+
+```
+[GroupDefinitions]
+public static class TabNames
+{
+    [Display(Order = 110)]
+    public const string Sidebar = "Sidebar";
+
+    [Display(Order = 100)]
+    public const string Description = "Description";
+}
+```
+
+And tab order gets changed:
+
+<img src="/img/2016-01/custom-tab-2.png" alt="Description tab on the left and Sidebar tab on the right." class="img-responsive">
+
+It is also possible to set access rights for the tab. In the example below I am setting administer access right on _Sidebar_ tab.
+
+```
+[GroupDefinitions]
+public static class TabNames
+{
+    [RequiredAccess(AccessLevel.Administer)]
+    [Display(Order = 100)]
+    public const string Sidebar = "Sidebar";
+
+    [Display(Order = 110)]
+    public const string Description = "Description";
+}
+```
+
+The documentation mentions that it is also possible to redefine order of system tabs but when I tried to redefine _Content_ tab in my _Commerce_ project I got an exception. Here is the code I used to redefine it:
+
+```
+[GroupDefinitions]
+public static class TabNames
+{
+    [Display(Order = 1000)]
+    public const string Content = SystemTabNames.Content;
+}
+```
+
+And here is an exception:
+
+```
+The 'Information' has been defined more than once, in the 'EPiServer.Commerce.Catalog.DataAnnotations.TabNames' and  in the 'CommerceTest.Web.TabNames'.
+```
+
+For more information about tabs look at [EPiServer Documentation](http://world.episerver.com/documentation/Items/Developers-Guide/Episerver-CMS/9/Content/grouping-content-types-and-properties/).
+
+# Original post
+
 First of all, let's define a custom attribute. It has two properties - _Name_ and _Index_. _Name_ is a tab's name which is used on _DisplayAttribute's_ _GroupName_ parameter. _Index_ sets tab's sort index.
 
 ```
