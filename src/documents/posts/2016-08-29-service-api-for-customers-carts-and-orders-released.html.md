@@ -4,7 +4,7 @@ title: "Service API for Customers, Carts and Orders released"
 description: "EPiServer released Service API some time ago but it was missing an API for Customers, Carts and Order. We at have now released additional Service API endpoints for this Commerce functionality."
 category:
 tags: [EPiServer]
-date: 2016-08-08
+date: 2016-08-29
 visible: true
 ---
 
