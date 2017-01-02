@@ -1,0 +1,12 @@
+each post in getCollection("posts").toJSON()
+  if post.date.getFullYear() == year
+    article
+      header
+        h1
+          a(href="#{post.url}")  #{post.title}
+        p.meta
+          time(datetime="#{post.date.toISOString()}")
+            != post.date.toDateString()
+      .entry-content
+        != post.description
+        | ..

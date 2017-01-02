@@ -83,7 +83,7 @@ ul.social {
   }
 }
 
-aside.panel {
+aside.panel, aside.archive {
   margin-top: 30px;
 }
 
@@ -103,5 +103,14 @@ aside.panel {
   .navbar-brand {
     color: #fff;
     font-weight: bold;
+  }
+}
+
+.archive {
+  .nav>li>a:hover, .nav>li>a:focus {
+      text-decoration: none;
+      background-color: transparent;
+      border-left: 1px solid @link-color;
+      padding-left: 14px;
   }
 }

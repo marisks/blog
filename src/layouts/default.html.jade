@@ -49,7 +49,10 @@ body
 			.row
 				.col-sm-8
 					!= content
-				.col-sm-4
+				.col-sm-1
+					aside.archive
+						!= partial('archive-nav')
+				.col-sm-3
 					aside.panel.panel-default
 						.panel-body
 							.about
@@ -82,7 +85,7 @@ body
 	#footer
 		.container
 			p.container.credit
-				| Copyright &copy; 2013 - Maris Krivtezs
+				| Copyright &copy; 2017 - Maris Krivtezs
 
 	script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
 	script.
