@@ -29,9 +29,9 @@ docpadConfig = {
 			# The website's styles
 			styles: [
 				'/css/vendor/normalize.css'
-            	'/css/vendor/main.css'
-            	'/css/vendor/bootstrap.min.css'
-            	'//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'
+							'/css/vendor/main.css'
+							'/css/vendor/bootstrap.min.css'
+							'//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'
 				'/css/style.css'
 			]
 
@@ -69,7 +69,10 @@ docpadConfig = {
 		getPreparedKeywords: ->
 			# Merge the document keywords with the site keywords
 			@site.keywords.concat(@document.keywords or []).join(', ')
-
+		isCurrent: (y,isRoot) ->
+			if @document.url.indexOf('/'+y) is 0 then 'active'
+			else if isRoot and @document.url.indexOf('/index') is 0 then 'active'
+			else ''
 
 	collections:
 		posts: ->
