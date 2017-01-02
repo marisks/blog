@@ -1,3 +1,8 @@
+/* Colors */
+@base-color: #981E32;
+@navigation-color: @base-color;
+@link-color: @base-color;
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html,
@@ -32,6 +37,13 @@ body {
 code {
   font-size: 80%;
 }
+a {
+  color: @link-color;
+
+  &:hover, &:focus {
+    color: darken(@link-color, 5%)
+  }
+}
 
 ul.social {
   display: table;
@@ -40,20 +52,20 @@ ul.social {
   padding: 10px 0 0 0;
 
   & > li {
-    display: table-cell; 
+    display: table-cell;
     text-align: center;
   }
 
   .fa {
     font-size: 2.2em;
   }
-  
+
   a {
-	color: #a5b2b9;
+	  color: #a5b2b9;
     color: rgba(0,39,59,.35);
-	
+
 	&:hover {
-		color: #008cba;
+		color: @link-color;
 	}
   }
 }
@@ -69,4 +81,23 @@ ul.social {
 
 aside.panel {
   margin-top: 30px;
+}
+
+.navbar-ornament {
+  background-color: @navigation-color;
+
+  .container {
+    background-image: url('/img/common/Zalktis-white-pixel-large.png');
+    background-repeat: no-repeat;
+    background-position: right 30px center;
+  }
+
+  &>.container .navbar-brand {
+    margin-left: 15px;
+  }
+
+  .navbar-brand {
+    color: #fff;
+    font-weight: bold;
+  }
 }
