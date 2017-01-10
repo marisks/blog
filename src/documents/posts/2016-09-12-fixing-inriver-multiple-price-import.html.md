@@ -7,9 +7,6 @@ tags: [EPiServer,InRiver]
 date: 2016-09-12
 visible: true
 ---
-<p class="lead">
-In one EPiServer Commerce project, I needed to import multiple prices for a variation in different currencies from InRiver. InRiver has a connector for EPiServer but unfortunately it supports only one price per variation.
-</p>
 
 Luckily _InRiver_ import has an option to create a handler which can be used to modify import _XML_ before importing into _Commerce_. The handler should implement _ICatalogImportHandler_ interface. It has two methods - _PreImport_ and _PostImport_. In my case, I left _PostImport_ empty and implemented _PreImport_.
 

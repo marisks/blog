@@ -8,10 +8,6 @@ date: 2015-10-15
 visible: true
 ---
 
-<p class="lead">
-Migration process of the project to .NET 4.6 and C# 6 is quite simple but still requires some steps to do.
-</p>
-
 # .NET 4.6
 
 First check if your Continuous Integration server supports project build for .NET 4.6. For example, _Team City_ starting version 9 supports it.
@@ -30,6 +26,6 @@ Also, if you are using _ReSharper_ (version 9 and up), you have to configure it 
 
 <img src="/img/2015-10/resharper-csharp-6.png" alt="ReSharper C# 6.0 settings" class="img-responsive">
 
-Now C# 6 features should be available and the project should compile. 
+Now C# 6 features should be available and the project should compile.
 
 There was one issue after the first build - _Visual Studio_ displayed me C# 6 features as errors. Deletion of _.suo_ file and restarting _Visual Studio_ helped to solve it.

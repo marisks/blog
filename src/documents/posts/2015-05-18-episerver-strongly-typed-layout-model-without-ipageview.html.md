@@ -8,10 +8,6 @@ date: 2015-05-18
 visible: true
 ---
 
-<p class="lead">
-EPiServer provides Alloy sample which uses IPageViewModel&lt;T&gt; interface to provide strongly typed model for layout, but this approach has several issues. In this article I am going to show alternative way for strongly typed layout models.
-</p>
-
 # Problem 
 
 Lot of _ASP.NET MVC_ examples show data sharing between controllers and layouts using _dynamic_ _ViewBag_ or _ViewData_ dictionary. This approach works fine for small application where you do not have a lot of data in a layout, but in a more complex application you want strongly typed model for layout.
@@ -43,17 +39,17 @@ When you are creating form and post to controller's action, _MVC_ automatically 
 
 ## 2. Issue: coupling
 
-While project is small this might not be an issue - just inherit all views from _PageViewModel&lt;T&gt;_ and it's fine. 
+While project is small this might not be an issue - just inherit all views from _PageViewModel&lt;T&gt;_ and it's fine.
 
 When your project starts to grow and you split your project in separate libraries by features, then all should share some common library with layout model even if feature library does not use it.
 
-Or you might start creating reusable UI libraries with own controllers and view models, then dependency on _IPageViewModel&lt;T&gt;_ becomes important issue. Not all projects share same layout model so it can't be common for all your projects. 
+Or you might start creating reusable UI libraries with own controllers and view models, then dependency on _IPageViewModel&lt;T&gt;_ becomes important issue. Not all projects share same layout model so it can't be common for all your projects.
 
 And if you want to use some 3rd party UI library, you are stuck. Because 3rd party library is not going to use your layout model.
 
 # Solution
 
-_ASP.NET MVC_ has a way to inject objects into your views. You just have to create base class for your views and this base class should [inherit from _WebViewPage&lt;T&gt;_](http://bradwilson.typepad.com/blog/2010/07/service-location-pt3-views.html). 
+_ASP.NET MVC_ has a way to inject objects into your views. You just have to create base class for your views and this base class should [inherit from _WebViewPage&lt;T&gt;_](http://bradwilson.typepad.com/blog/2010/07/service-location-pt3-views.html).
 
     public class MyBaseWebViewPage : WebViewPage
     {

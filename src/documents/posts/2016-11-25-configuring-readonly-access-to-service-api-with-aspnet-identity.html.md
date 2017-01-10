@@ -8,10 +8,6 @@ date: 2016-11-25
 visible: true
 ---
 
-<p class="lead">
-Recently I had to configure read-only access to the Service API. ASP.NET Identity is used in this project and I was not able to make it work. The project was EPiServer 9 project. So I wanted to check if it is fixed in the EPiServer 10.
-</p>
-
 # Configuring read-only Service API access
 
 First of all, [ASP.Identity should be configured for Service API](http://marisks.net/2016/08/31/service-api-authentication-with-new-identity/). The process for _EPiServer 10_ is same as for _EPiServer 9_.

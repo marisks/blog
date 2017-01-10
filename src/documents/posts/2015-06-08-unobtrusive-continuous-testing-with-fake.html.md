@@ -1,16 +1,15 @@
 ---
 layout: post
 title: "Unobtrusive continuous testing with FAKE"
-description: "When unit testing I want to get feedback from my tests fast - usually on build. The technique is called 'Continuous test-driven development' or just 'Continuous testing'. There are available several tools for it, but I wanted to try FAKE."
+description: >
+  <t render="markdown">
+  When unit testing I want to get feedback from my tests fast - usually on build. The technique is called [Continuous test-driven development](http://en.wikipedia.org/wiki/Continuous_test-driven_development) or just 'Continuous testing'. There are available several tools for it, but I wanted to try FAKE.
+  </t>
 category: [F#]
 tags: [F#, FAKE]
 date: 2015-06-08
 visible: true
 ---
-
-<p class="lead">
-When unit testing I want to get feedback from my tests fast - usually on build. The technique is called [Continuous test-driven development](http://en.wikipedia.org/wiki/Continuous_test-driven_development) or just 'Continuous testing'. There are available several tools for it, but I wanted to try FAKE.
-</p>
 
 Previously I have tried different tools for continuous testing. Probably most advanced one is [NCrunch](http://www.ncrunch.net/), but it is also quite expensive. I also tried [ContinuousTests](http://www.continuoustests.com/), but it had several bugs running my builds and tests. There is also [Giles](http://codereflection.github.io/Giles/) I haven't tried.
 
@@ -47,7 +46,7 @@ Then create function which will run tests.
 
     let testDir  = "../../TeamProject/TeamProject.Tests/bin/Debug/"
 
-    let runTests () = 
+    let runTests () =
         tracefn "Running tests..."
         !! (testDir @@ "*.Tests.dll")
         |> xUnit2 (fun p -> {
@@ -61,10 +60,10 @@ Next I had to define _Watch_ task which will look for changes in test project's 
 
     let fullDir = System.IO.Path.GetFullPath testDir
     Target "Watch" (fun _ ->
-        use watcher = !! (fullDir @@ "*.*") |> WatchChanges (fun changes -> 
+        use watcher = !! (fullDir @@ "*.*") |> WatchChanges (fun changes ->
             runTests()
         )
-        System.Console.ReadLine() |> ignore 
+        System.Console.ReadLine() |> ignore
         watcher.Dispose()
     )
 

@@ -8,13 +8,9 @@ date: 2015-06-01
 visible: true
 ---
 
-<p class="lead">
-Azure has Service Bus service available, but while it is called 'Service Bus' it is messaging service as MSMQ or RabitMQ. Creating reliable message passing might be hard, but luckly there are several frameworks available. In this article I am going to describe how to use MassTransit's Service Bus framework with Azure Service Bus to improve EPiServer data import.
-</p>
-
 # Introduction
 
-More than a month ago I wrote an article [Azure infrastructure usage for EPiServer data import](/2015/04/20/azure-infrastructure-usage-for-episerver-data-import/) in which I described how to use _Azure Service Bus_ _Queues_ to create import of _EPiServer_ data. 
+More than a month ago I wrote an article [Azure infrastructure usage for EPiServer data import](/2015/04/20/azure-infrastructure-usage-for-episerver-data-import/) in which I described how to use _Azure Service Bus_ _Queues_ to create import of _EPiServer_ data.
 
 While _Azure Service Bus_ _Queues_ did it's work, it has several issues. _Queues_ are only transport layer - those are used to pass messages around. It means that you have to handle errors, retry policy and transaction handling on your own.
 
@@ -89,7 +85,7 @@ Previous _Scheduled Job_ can be found [here](https://github.com/marisks/NewsSite
         var cn = ConfigurationManager
                 .ConnectionStrings["EPiServerAzureEvents"]
                 .ConnectionString;
-        
+
         var container = CreateStorageContainer();
 
         using (var bus = AzureBusInitializer.CreateBus(
@@ -215,7 +211,7 @@ _ImportArticleProcessor_ is similar to _ImportDataProcessor_. It has _Article_ m
                     });
                 }, cn);
 
-            
+
             return base.OnStart();
         }
 

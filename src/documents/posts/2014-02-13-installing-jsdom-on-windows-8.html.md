@@ -1,15 +1,14 @@
 ---
 layout: post
 title: "Installing JSDOM on Windows 8"
-description: "I was starting to build JavaScript module which manipulates XML DOM. For testing purposes I needed some module which creates browser like document object model and the best module I found was JSDOM. Unfortunately installing it might be tricky."
-category: 
+description: >
+  <t render="markdown">
+  I was starting to build JavaScript module which manipulates XML DOM. For testing purposes I needed some module which creates browser like document object model and the best module I found was JSDOM. Unfortunately installing it might be tricky.
+  </t>
+category:
 tags: [node,npm,javascript]
 date: 2014-02-13
 ---
-
-<p class="lead">
-I was starting to build JavaScript module which manipulates XML DOM. For testing purposes I needed some module which creates browser like document object model and the best module I found was JSDOM. Unfortunately installing it might be tricky.
-</p>
 
 I found article how to install it on [Windows 7](http://www.steveworkman.com/node-js/2012/installing-jsdom-on-windows/) and several Stack Overflow questions. But even following these instructions I couldn't get it working on my Windows 8.1 machine.
 
@@ -21,4 +20,3 @@ So prerequisites for JSDOM (and any other C module) on Windows 8 are:
 - Python - >= 2.7.3 and < 3.0.0
 - Visual Studio 2012 C++ ([Windows Desktop](http://go.microsoft.com/?linkid=9816758) also can be used)
 - **Visual Studio 2010 must not have been installed**
-

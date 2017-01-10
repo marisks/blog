@@ -8,10 +8,6 @@ date: 2015-05-11
 visible: true
 ---
 
-<p class="lead">
-I have tried two different approaches to create Xaml application - MVC and MVVM, but did not feel that those are functional enough. In this article I am looking at event driven MVVM using FSharp.ViewModule's EventViewModelBase<'a>.
-</p>
-
 # Introduction
 
 In my last article about [F# Xaml application](/2015/04/27/f-sharp-xaml-application-mvvm-vs-mvc/) [Reed Copsey](http://reedcopsey.com/) [pointed out](/2015/04/27/f-sharp-xaml-application-mvvm-vs-mvc/#comment-1990588618) that _FSharp.ViewModule's_ _EventViewModelBase<'a>_ allows handling commands as event stream. In this article I am looking how to rewrite my game score board event driven way using _EventViewModelBase<'a>_.
@@ -20,7 +16,7 @@ User interface and _Xaml_ view remains same as in [previous version](/2015/04/27
 
 # Event driven MVVM
 
-First of all define model. It is simple record type with two score values for two teams. 
+First of all define model. It is simple record type with two score values for two teams.
 
     type Score = {
         ScoreA: int
@@ -33,7 +29,7 @@ Then define event type which will be used in view model's event stream and shoul
 
 Now define view model itself and inherit from _EventViewModelBase&lt;ScoringEvent&gt;_.
 
-    type MainViewModel() as self = 
+    type MainViewModel() as self =
         inherit EventViewModelBase<ScoringEvent>()
 
 Create mutable field to store score and initialize it with default value. Also create backing fields and properties for fields which will be used to bind score to _Xaml_ view's labels. This is same as in [MVVM version](/2015/04/27/f-sharp-xaml-application-mvvm-vs-mvc/) from previous article.
@@ -44,9 +40,9 @@ Create mutable field to store score and initialize it with default value. Also c
     let scoreA = self.Factory.Backing(<@ self.ScoreA @>, "00")
     let scoreB = self.Factory.Backing(<@ self.ScoreB @>, "00")
 
-    member self.ScoreA with get() = scoreA.Value 
+    member self.ScoreA with get() = scoreA.Value
                         and set value = scoreA.Value <- value
-    member self.ScoreB with get() = scoreB.Value 
+    member self.ScoreB with get() = scoreB.Value
                         and set value = scoreB.Value <- value
 
 _EventViewModelBase<'a>_ has property _EventStream_ of type _IObservable<'a>_ - in our case it is _IObservable&lt;ScoringEvent&gt;_. _EventViewModelBase<'a>_ will trigger all bound events onto this stream that it is possible to use this property to subscribe to the events.
@@ -97,7 +93,7 @@ First of all extend model with static member _zero_ which is used to initialize 
     type Score = {
         ScoreA: int
         ScoreB: int
-    } with 
+    } with
         static member zero = {ScoreA = 0; ScoreB = 0}
 
 Our handler function takes _ScoringEvent_ as a parameter and returns _unit_. It could be possible to extract it as a controller, but I wanted to make my controller a [pure function](http://en.wikipedia.org/wiki/Pure_function). So my controller takes model and event as a parameter and returns new model. Here is controller type - it is just simple function.
@@ -106,7 +102,7 @@ Our handler function takes _ScoringEvent_ as a parameter and returns _unit_. It 
 
 Now inject controller into view model.
 
-    type MainViewModel(controller : Controller) as self = 
+    type MainViewModel(controller : Controller) as self =
         inherit EventViewModelBase<ScoringEvent>()
 
 And rewrite _eventHandler_ function to use newly created controller. Now _eventHandler_ works as an _adapter_ between controller and event stream and handles mutable state change.
@@ -116,7 +112,7 @@ And rewrite _eventHandler_ function to use newly created controller. Now _eventH
 
 Now create controller function. For this purpose I have created separate module.
 
-    module Handling = 
+    module Handling =
 
         let controller score ev =
            match ev with
@@ -124,7 +120,7 @@ Now create controller function. For this purpose I have created separate module.
             | DecA -> {score with ScoreA = score.ScoreA - 1}
             | IncB -> {score with ScoreB = score.ScoreB + 1}
             | DecB -> {score with ScoreB = score.ScoreB - 1}
-            | New -> Score.zero 
+            | New -> Score.zero
 
 The last task is composing all parts together. When you have view model without default contsructor, _Xaml_ requires separate type which provides instance of view model. First of all define type _CompositionRoot_ with _ViewModel_ property which returns composed view model.
 

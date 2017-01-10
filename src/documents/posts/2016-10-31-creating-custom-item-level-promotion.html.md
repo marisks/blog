@@ -1,16 +1,15 @@
 ---
 layout: post
 title: "Creating custom item level promotion"
-description: "Some time ago I wrote an article how to create an order level promotion. In this article, I will describe how to create an item (entry) level promotion."
+description: >
+  <t render="markdown">
+  Some time ago I wrote an article how to create <a href="/2016/05/31/episerver-marketing-beta-creating-custom-order-promotion-update/">an order level promotion</a>. In this article, I will describe how to create an item (entry) level promotion.
+  </t>
 category:
 tags: [EPiServer]
 date: 2016-10-31
 visible: true
 ---
-
-<p class="lead">
-Some time ago I wrote an article how to create <a href="http://marisks.net/2016/05/31/episerver-marketing-beta-creating-custom-order-promotion-update/">an order level promotion</a>. In this article, I will describe how to create an item (entry) level promotion.
-</p>
 
 In this example, I will show how to create entry level promotion based on a line item meta field - applying a discount when line item meta field discount value matches a discount value defined in the promotion.
 

@@ -8,10 +8,6 @@ date: 2016-12-19
 visible: true
 ---
 
-<p class="lead">
-Extension methods are a great way to extend the functionality of objects. Sometimes, when extending an object, it is required to use some service and here comes a dependency injection. Developers use different approaches how to inject dependencies into an extension method. Some are better than others but some popular ones actually are anti-patterns.
-</p>
-
 The most common dependency injection pattern - constructor injection is not available in extension methods as there is no object to construct. So there are several options left:
 * method injection,
 * service locator,

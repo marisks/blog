@@ -8,10 +8,6 @@ date: 2015-05-20
 visible: true
 ---
 
-<p class="lead">
-Configuring Entity Framework through fluent API sometimes is quite hard. In this article I am showing how to configure it to handle entity's child collections that those properly gets added and removed from collection.
-</p>
-
 # Sample model
 
 Here is sample model which to configure. It has root entity - _Order_ and collection of _OrderItems_.

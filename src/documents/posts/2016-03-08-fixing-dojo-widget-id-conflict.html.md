@@ -7,9 +7,6 @@ tags: [EPiServer, JavaScript]
 date: 2016-03-08
 visible: true
 ---
-<p class="lead">
-Recently I got an error related to Dojo widget about conflicting "id" on the HTML element. While it is possible to work with Dojo without "ids", those are necessary for field labels to work properly.
-</p>
 
 Here is the error I got:
 

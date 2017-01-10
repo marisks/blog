@@ -8,10 +8,6 @@ date: 2017-01-09
 visible: true
 ---
 
-<p class="lead">
-Episerver just released a new version which added a constructor injection support in scheduled jobs. It encouraged me to create a list of different Episerver infrastructure parts which still do not support a constructor injection.
-</p>
-
 Initially, I was thinking just to look at the _Episerver_ documentation and find which parts of the infrastructure might not have constructor injection working. But [Valdis Iljučonoks](http://blog.tech-fellow.net/) suggested to look up for _Activator.CreateInstance_ usages in the _Episerver_ code.
 
 So I used [Reflector](http://www.red-gate.com/products/dotnet-development/reflector/) to search for _Activator.CreateInstance_ usages. It has several overloads but only these five are used by the _Episerver_:

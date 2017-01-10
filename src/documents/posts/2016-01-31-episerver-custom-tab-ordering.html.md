@@ -7,9 +7,6 @@ tags: [EPiServer]
 date: 2016-01-30
 visible: true
 ---
-<p class="lead">
-  EPiServer allows us to group content's properties into different tabs using _GroupName_ parameter on _DisplayAttribute_. While it works fine, it doesn't order tabs I want. In this article, I will show a simple declarative way to control tab ordering.
-</p>
 
 # Update
 

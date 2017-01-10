@@ -8,10 +8,6 @@ date: 2015-04-20
 visible: true
 ---
 
-<p class="lead">
-I was working in EPiServer Commerce project on product import and thought that it would be great to use Azure infrastructure to make import process more reliable and consume less resources of Web server. In this article I am describing sample project using Azure Service Bus Queues and Worker Roles for this task.
-</p>
-
 In my current _EPiServer Commerce_ solution import is done using custom _Scheduled Jobs_ which are resource intensive. Jobs has to be run at night to not decrease performance of Web servers. When something fails during import process _Scheduled Jobs_ should start from beginning and only next night. It is not good solution in global world where applications should run 24/7 and should perform well any time. Udi Dahan describes this issue well in article [Status fields on entities - HARMFUL?](http://particular.net/blog/status-fields-on-entities-harmful). I created sample _EPiServer CMS_ site with page import to test such architecture.
 
 # Sample site
@@ -27,14 +23,14 @@ I have described new _EPiServer CMS_ project creation and hosting on _Azure_ in 
 
 <img src="/img/2015-04/azure_episerver_import_arch.png" alt="Azure EPiServer import architecture" class="img-responsive">
 
-1. The CSV file is uploaded onto _Azure Storage_. 
-2. _EPiServer_ _Scheduled Job_ time to time looks for added import files. 
-3. When file appears, it creates _Service Bus_ message with file information and publishes onto the file import queue. 
-4. File import _Worker_ gets messages from file import queue, 
-5. reads file from _Storage_, 
-6. parses it and creates messages with article data (one message per article). 
-7. Then it publishes messages with article data onto the article import queue. 
-8. Second _Worker_ - article import worker gets messages from article import queue 
+1. The CSV file is uploaded onto _Azure Storage_.
+2. _EPiServer_ _Scheduled Job_ time to time looks for added import files.
+3. When file appears, it creates _Service Bus_ message with file information and publishes onto the file import queue.
+4. File import _Worker_ gets messages from file import queue,
+5. reads file from _Storage_,
+6. parses it and creates messages with article data (one message per article).
+7. Then it publishes messages with article data onto the article import queue.
+8. Second _Worker_ - article import worker gets messages from article import queue
 9. and posts them to _Web API_ endpoint on _EPiServer_ site where new articles get created.
 
 In this sample architecture we can see that any data transformation, file download/processing tasks can be moved to _Workers_. Such _Workers_ can run paralelly and their throughput can be increased or decreased by needs or configured to autoscale. Also it offloads main _EPiServer_ site from background processing tasks.
@@ -230,7 +226,7 @@ Now I am rady to consume messages. Execution of the worker is done in _Run_ meth
             {
                 try
                 {
-                    Trace.WriteLine("Processing Service Bus message: " + 
+                    Trace.WriteLine("Processing Service Bus message: " +
                                      receivedMessage.SequenceNumber.ToString());
 
                     var importFile = receivedMessage.GetBody<ImportFile>();
@@ -262,7 +258,7 @@ For CSV parsing I am just reading file line by line and split columns by comma, 
     private static IEnumerable<Article> ReadArticles(CloudBlockBlob blob)
     {
         var text = blob.DownloadText();
-        
+
         using (var sr = new StringReader(text))
         {
             string line;
@@ -334,7 +330,7 @@ Then I am going to consume _Article_ messages and just post to _Web API_ end-poi
                 try
                 {
                     // Process the message
-                    Trace.WriteLine("Processing Service Bus message: " 
+                    Trace.WriteLine("Processing Service Bus message: "
                                     + receivedMessage.SequenceNumber.ToString());
 
                     var article = receivedMessage.GetBody<Article>();

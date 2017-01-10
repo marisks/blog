@@ -8,10 +8,6 @@ date: 2015-09-29
 visible: true
 ---
 
-<p class="lead">
-When doing testing against DB it is important to reset it to the initial state. I am using Entity Framework for SQL DB access and it provides a mechanism to recreate DB each time, but it is slow and sometimes fails because of open DB connections. Much easier is to delete everything from tables and Respawn is great too which helps to do it.
-</p>
-
 [Respawn](https://github.com/jbogard/Respawn) is created by [Jimmy Bogard](https://lostechies.com/jimmybogard/). You can find documentation on tool's [Github page](https://github.com/jbogard/Respawn).
 
 For my purpose, I needed cleaning all my tables in test DB, but sometimes I also required to recreate the whole DB when schema had changed. I am also writing my DB tests so that those do not depend on other tests and that those do not conflict with data already in tables. Because of that I can reset DB only once when running tests.
@@ -67,7 +63,7 @@ Next task is to re-create database when needed. To achieve that first I will cre
 
 Then create a test which recreates DB. Use _Entity Framework's_ _DropCreateDatabaseAlways_ initializer in the test.
 
-    public class DatabaseSeedingInitializer 
+    public class DatabaseSeedingInitializer
         : DropCreateDatabaseAlways<WebshopDbContext> { }
 
     public class SchemaCreationTest

@@ -8,10 +8,6 @@ date: 2016-08-08
 visible: true
 ---
 
-<p class="lead">
-EPiServer provides a way how to initialize Dojo modules in the module.config file. Unfortunately, you can set only one module initializer. In this article, I will describe how to solve this issue.
-</p>
-
 I had an issue with registering multiple _Dojo_ modules after installing [MenuPin](https://github.com/davidknipe/MenuPin) package. My modules stopped working. After some investigation, I found the solution.
 
 First of all, create another initializer under _ClientResources_ - for now just a file for the initializer. I called it _Initializer.js_.

@@ -7,9 +7,6 @@ tags: [EPiServer,.NET]
 date: 2016-03-31
 visible: true
 ---
-<p class="lead">
-Recently, I installed and configured my new development computer. Manual application installation and configuration take a lot of time. In the Linux (Ubuntu) world you can use apt-get to script application installation, but for configuration can backup "dotfiles" on the old machine and restore on the new. Luckily there are some tools which will help you do same on Windows.
-</p>
 
 # Install applications with Chocolatey
 

@@ -8,10 +8,6 @@ date: 2015-04-11
 visible: true
 ---
 
-<p class="lead">
-Lately Azure become really popular hosting you web applications and websites. EPiServer also has made their CMS able to run on Azure. In this article I am describing my experience to setup EPiServer CMS on Azure.
-</p>
-
 While _EPiServer_ provides [documentation](http://world.episerver.com/documentation/Items/Developers-Guide/EPiServer-CMS/8/Deployment/Deployment-scenarios/Deploying-to-Azure-webapps/) on how to do deployment to _Azure_ I want to document my experience.
 
 # Creating EPiServer CMS site
@@ -68,7 +64,7 @@ Start creating it by clicking on _New_, select _Data + Storage_ -> _Storage_.
 
 <img src="/img/2015-04/new_azure_storage.png" alt="Create new Storage view" class="img-responsive">
 
-Provide name of the _Storage_ (it should be in lowercase as described in documentation), select pricing, select or create resource group, select location and if needed can enable diagnostics. _Storage_ creation also will take some time and after it is created, I can navigate to _Storage_ management view. 
+Provide name of the _Storage_ (it should be in lowercase as described in documentation), select pricing, select or create resource group, select location and if needed can enable diagnostics. _Storage_ creation also will take some time and after it is created, I can navigate to _Storage_ management view.
 
 <img src="/img/2015-04/new_azure_storage2.png" alt="Storage management view" class="img-responsive">
 
@@ -88,30 +84,34 @@ Then provide namespace name, select region, type - _MESSAGING_ and messaging tie
 
 First of all I have to provide configuration for _Storage_ and _Service Bus_. Open _Visual Studio_ project and open _Web.config_. In _episerver.framework_ section add _blob_ and _event_ configuration.
 
-    <blob defaultProvider="azureblobs">
-      <providers>
-        <add name="azureblobs" type="EPiServer.Azure.Blobs.AzureBlobProvider,EPiServer.Azure"
-              connectionStringName="EPiServerAzureBlobs" container="epinewssitemedia"/>
-      </providers>
-    </blob>
-    <event defaultProvider="azureevents">
-      <providers>
-        <add name="azureevents" type="EPiServer.Azure.Events.AzureEventProvider,EPiServer.Azure"
-              connectionStringName="EPiServerAzureEvents" topic="epinewssiteevents"/>
-      </providers>
-    </event>
+```
+<blob defaultProvider="azureblobs">
+  <providers>
+    <add name="azureblobs" type="EPiServer.Azure.Blobs.AzureBlobProvider,EPiServer.Azure"
+          connectionStringName="EPiServerAzureBlobs" container="epinewssitemedia"/>
+  </providers>
+</blob>
+<event defaultProvider="azureevents">
+  <providers>
+    <add name="azureevents" type="EPiServer.Azure.Events.AzureEventProvider,EPiServer.Azure"
+          connectionStringName="EPiServerAzureEvents" topic="epinewssiteevents"/>
+  </providers>
+</event>
+```
 
 _container_ and _topic_ are the names for _Storage_ container and _Service Bus_ topic accordingly. Those should be unique per _Web App_ and _Storage_ or _Service Bus_. _connectionStringName_ attribute value is the name of connection string from _connectionStrings_ section.
 
-I have to configure three connection strings - for _SQL Database_, _Storage_ and _Service Bus_. First copy connection string for _SQL Database_ which I can find in new _Azure Portal_ in _Properties_ view for _SQL Database_. 
+I have to configure three connection strings - for _SQL Database_, _Storage_ and _Service Bus_. First copy connection string for _SQL Database_ which I can find in new _Azure Portal_ in _Properties_ view for _SQL Database_.
 
 <img src="/img/2015-04/new_azure_sql_db3.png" alt="SQL Database management view with connection strings" class="img-responsive">
 
 I have to change password in the connection string to my user's password and add _MultipleActiveResultSets=True_ as required by _EPiServer_ documentation.
 
-    <add name="EPiServerDB" 
-        connectionString="Server=tcp:episites.database.windows.net,1433;Database=episnewssite;User ID=marisks@episites;Password={your_password_here};Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;MultipleActiveResultSets=True" 
-        providerName="System.Data.SqlClient" />
+```
+<add name="EPiServerDB"
+    connectionString="Server=tcp:episites.database.windows.net,1433;Database=episnewssite;User ID=marisks@episites;Password={your_password_here};Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;MultipleActiveResultSets=True"
+    providerName="System.Data.SqlClient" />
+```
 
 Next add connection string for _Storage_ with same name as configured for blobs. I found connection string in _Storage_ management view under _Keys_.
 
@@ -119,8 +119,10 @@ Next add connection string for _Storage_ with same name as configured for blobs.
 
 Copy primary connection string and add it to _Web.config_.
 
-    <add name="EPiServerAzureBlobs" 
-        connectionString="DefaultEndpointsProtocol=https;AccountName=epinewssite;AccountKey={the key}" />
+```
+<add name="EPiServerAzureBlobs"
+    connectionString="DefaultEndpointsProtocol=https;AccountName=epinewssite;AccountKey={the key}" />
+```
 
 And last connection string is for _Service Bus_. In old _Azure Portal_ select _Service Bus_ in left menu and _Connection information_ on the bottom.
 
@@ -132,8 +134,10 @@ Copy connection information from modal window.
 
 And add copied connection string to _Web.config_.
 
-    <add name="EPiServerAzureEvents" 
-        connectionString="Endpoint=sb://epinewssite.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={the key}" />
+```
+<add name="EPiServerAzureEvents"
+    connectionString="Endpoint=sb://epinewssite.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={the key}" />
+```
 
 # Deploy to Azure
 
@@ -163,6 +167,6 @@ First of all configure _SQL Database_ to allow local computer access it. In new 
 
 Now I am able to open _EPiServer CMS_ administration interface locally by logging in with local _Windows_ administrator credentials. Then go to _CMS_ -> _Admin_ -> _Administer Groups_ and create _WebAdmins_ and _WebEditors_ groups. After that got to _CMS_ -> _Admin_ -> _Create User_ and create new user which should be added to both previously created groups.
 
-When it is done I am able to login into _EPiServer CMS_ administration interface with newly created user on deployed _EPiServer_ _Azure_ site. Now I can start creating my site - add page types, controllers, views, create content and configure _EPiServer_ website as needed. 
+When it is done I am able to login into _EPiServer CMS_ administration interface with newly created user on deployed _EPiServer_ _Azure_ site. Now I can start creating my site - add page types, controllers, views, create content and configure _EPiServer_ website as needed.
 
 For additional information and configuration refer to [EPiServer documentation](http://world.episerver.com/documentation/Items/Developers-Guide/EPiServer-CMS/8/Deployment/Deployment-scenarios/Deploying-to-Azure-webapps/).

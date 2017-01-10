@@ -1,16 +1,15 @@
 ---
 layout: post
 title: "Getting started with Vim on Windows"
-description: "I am not a new Vim user, but I have never used it as my main editor. I've learned the basic movement and editing commands, which I am using in Vi modes in different editors - Sublime Text's Vi mode, Visual Studio's extension - VsVim, and others. As now Vim can be used as fully featured C# (by Omnisharp) and F# (by vim-fsharp) environment, I want to use Vim as my main development environment. The first step for that is installing and setting up basic configuration."
+description: >
+  <t render="markdown">
+  I am not a new _Vim_ user, but I have never used it as my main editor. I've learned the basic movement and editing commands, which I am using in _Vi_ modes in different editors - _Sublime Text's Vi_ mode, _Visual Studio's_ extension - _VsVim_, and others. As now _Vim_ can be used as fully featured C# (by <a href="http://www.omnisharp.net/">Omnisharp</a>) and F# (by <a href="https://github.com/fsharp/vim-fsharp">vim-fsharp</a>) environment, I want to use _Vim_ as my main development environment. The first step for that is installing and setting up basic configuration.
+  </t>
 category: [Vim]
 tags: [Vim]
 date: 2015-10-14
 visible: true
 ---
-
-<p class="lead">
-I am not a new _Vim_ user, but I have never used it as my main editor. I've learned the basic movement and editing commands, which I am using in _Vi_ modes in different editors - _Sublime Text's Vi_ mode, _Visual Studio's_ extension - _VsVim_, and others. As now _Vim_ can be used as fully featured C# (by <a href="http://www.omnisharp.net/">Omnisharp</a>) and F# (by <a href="https://github.com/fsharp/vim-fsharp">vim-fsharp</a>) environment, I want to use _Vim_ as my main development environment. The first step for that is installing and setting up basic configuration.
-</p>
 
 # Installing ConEmu
 

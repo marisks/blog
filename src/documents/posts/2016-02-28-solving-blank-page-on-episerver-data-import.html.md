@@ -7,9 +7,6 @@ tags: [EPiServer]
 date: 2016-02-28
 visible: true
 ---
-<p class="lead">
-Recently I had to import data from one EPiServer site to another but got blank page immediately after clicking Begin Import button.
-</p>
 
 <img src="/img/2016-02/episerver-import-data-blank-page.png" alt="Blank page on EPiServer data import" class="img-responsive">
 

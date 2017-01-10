@@ -1,15 +1,15 @@
 ---
 layout: post
 title: "Dependency injection in EPiServer"
-description: "The concept of a dependency injection is simple - pass a dependent object in your object to use it. But that is not the only concept involved and some of the used concepts are better than others. In the EPiServer world, several patterns are used and misused."
+description: >
+  <t render="markdown">
+  The concept of <a href="https://en.wikipedia.org/wiki/Dependency_injection">a dependency injection</a> is simple - pass a dependent object in your object to use it. But that is not the only concept involved and some of the used concepts are better than others. In the EPiServer world, several patterns are used and misused.
+  </t>
 category:
 tags: [EPiServer]
 date: 2016-12-01
 visible: true
 ---
-<p class="lead">
-The concept of <a href="https://en.wikipedia.org/wiki/Dependency_injection">a dependency injection</a> is simple - pass a dependent object in your object to use it. But that is not the only concept involved and some of the used concepts are better than others. In the EPiServer world, several patterns are used and misused.
-</p>
 
 # Service locator
 

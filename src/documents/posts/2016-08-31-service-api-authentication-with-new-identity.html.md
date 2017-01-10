@@ -1,15 +1,15 @@
 ---
 layout: post
 title: "Service API authentication with new AspNetIdentity OWIN"
-description: "EPiServer recently released a package which adds support for ASP.NET identity in the CMS project. While it works great with CMS UI authentication, Service API configuration is a little bit more complicated."
+description: >
+  <t render="markdown">
+  EPiServer recently released a [package](http://world.episerver.com/documentation/Items/Developers-Guide/Episerver-CMS/9/Security/episerver-aspnetidentity/) which adds support for ASP.NET identity in the CMS project. While it works great with CMS UI authentication, Service API configuration is a little bit more complicated.
+  </t>
 category:
 tags: [EPiServer]
 date: 2016-08-31
 visible: true
 ---
-<p class="lead">
-EPiServer recently released a [package](http://world.episerver.com/documentation/Items/Developers-Guide/Episerver-CMS/9/Security/episerver-aspnetidentity/) which adds support for ASP.NET identity in the CMS project. While it works great with CMS UI authentication, Service API configuration is a little bit more complicated.
-</p>
 
 Setting up _ASP.NET Identity_ in the CMS project is documented on [EPiServer World](http://world.episerver.com/documentation/Items/Developers-Guide/Episerver-CMS/9/Security/episerver-aspnetidentity/).
 

@@ -8,10 +8,6 @@ date: 2016-05-31
 visible: true
 ---
 
-<p class="lead">
-Last week I wrote an article about creating an order promotion with new EPiServer Marketing [Beta]. I haven't noticed the new version which came out last week and had some improvements in an API. This article describes changes in promotions for Commerce 9.16.0.
-</p>
-
 Thanks to [@lunchin](http://marisks.net/2016/05/24/episerver-marketing-beta-creating-custom-order-promotion/#comment-2693609996) pointing me that new Commerce version came out with improvements.
 
 So the changes. First of all, custom promotion processor should inherit proper base class:

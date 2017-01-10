@@ -1,17 +1,16 @@
 ---
 layout: post
 title: "DevConFu conference review"
-description: "DevConFu is first DevClub conference in Latvia which was hold 13th – 15th November 2013 in Jurmala. Before conference I was sceptical about it. I was discovering conference program and found only few interesting sessions for me. Saw that there were many Agile, Testing, but less development related stuff. I also wanted to get to Mark Seeman's session \"Poka-yoke code: APIs for stupid programmers\", but was dissapointed that it didn't happen. And so I was even more sceptical. But."
-category: 
+description: >
+  <t render="markdown">
+  DevConFu is first DevClub conference in Latvia which was hold 13th – 15th November 2013 in Jurmala. Before conference I was sceptical about it. I was discovering conference program and found only few interesting sessions for me. Saw that there were many Agile, Testing, but less development related stuff. I also wanted to get to [Mark Seeman's](https://twitter.com/ploeh) session _Poka-yoke code: APIs for stupid programmers_, but was dissapointed that it didn't happen. And so I was even more sceptical. But...
+  </t>
+category:
 tags: [Conferences]
 date: 2013-12-21
 ---
 
-<p class="lead">
-DevConFu is first DevClub conference in Latvia which was hold 13th – 15th November 2013 in Jurmala. Before conference I was sceptical about it. I was discovering conference program and found only few interesting sessions for me. Saw that there were many Agile, Testing, but less development related stuff. I also wanted to get to [Mark Seeman's](https://twitter.com/ploeh) session _Poka-yoke code: APIs for stupid programmers_, but was dissapointed that it didn't happen. And so I was even more sceptical. But...
-</p>
-
-##First day
+## First day
 
 I was not attending to Workshops, but heard satisfied responses from my collegues about AngularJS session...
 
@@ -19,7 +18,7 @@ I was not attending to Workshops, but heard satisfied responses from my collegue
 
 ### Let's Help Melly
 
-Keynote _Let's Help Melly_ by Jurgen Apello was great and really inspiring. It changed my mind about _Agile_ sessions completely. 
+Keynote _Let's Help Melly_ by Jurgen Apello was great and really inspiring. It changed my mind about _Agile_ sessions completely.
 
 ### The Doctor is In
 
@@ -96,8 +95,4 @@ If James Grenning inspired me to do TDD, then J.B. Rainsberger convinced me to d
 
 ## Summary
 
-I did like the conference a lot - have met other people in our industry, got answers to several my questions, was inspired to work better and introduce new practices in my and my company's development process. 
-
-
-
-
+I did like the conference a lot - have met other people in our industry, got answers to several my questions, was inspired to work better and introduce new practices in my and my company's development process.

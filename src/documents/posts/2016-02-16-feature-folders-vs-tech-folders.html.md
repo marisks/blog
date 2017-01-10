@@ -7,9 +7,6 @@ tags: [.NET, EPiServer]
 date: 2016-02-16
 visible: true
 ---
-<p class="lead">
-For several years using ASP.NET MVC we tend to organize our code by Models, Controllers, and Views. In EPiServer development, we also split it more - into Page types, View models, and other types. But lately, developers started to realize that it is hard to manage such codebase and started to organize the code by features. In this article, I will analyze both approaches using Dependency Structure Matrix.
-</p>
 
 # Introduction
 

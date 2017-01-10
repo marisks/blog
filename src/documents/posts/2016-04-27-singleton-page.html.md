@@ -7,9 +7,6 @@ tags: [EPiServer]
 date: 2016-04-27
 visible: true
 ---
-<p class="lead">
-Quite often when developing a website on EPiServer, I am creating page types which are used only for a single page. Such pages could be - cart page, order page, password reset page etc. To load such page, the pattern I use is adding properties with content references of those pages on the start page, then load start page and then load configured page. This sounds too complicated when I know that this page has only a single instance. Also, it is quite often that I forget to configure these pages for different environments. So few months ago I had an idea to create extension methods which would allow loading these pages in a simple way.
-</p>
 
 A singleton page extension method looks for the first page of a particular type under given root page. Usually, you would like to search under start page. There are extensions for _ContentReference_ and for _PageData_.
 

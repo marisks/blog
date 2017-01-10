@@ -7,9 +7,6 @@ tags: [EPiServer]
 date: 2016-10-21
 visible: true
 ---
-<p class="lead">
-Coupon code discounts are one of the simplest discount types. All new EPiServer promotions can be configured to be applied with coupon code. In this article, I will show how to add a coupon code to an order and create a simple order discount using it.
-</p>
 
 Adding coupon codes to an order is simple. Actually, add the coupon code to the cart (which is a kind of order).
 

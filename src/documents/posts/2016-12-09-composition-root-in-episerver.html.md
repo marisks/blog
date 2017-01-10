@@ -8,10 +8,6 @@ date: 2016-12-09
 visible: true
 ---
 
-<p class="lead">
-In the previous article, I described different dependency injection aspects and how those are applied in EPiServer. This article shows how composition root can be created for EPiServer MVC controllers.
-</p>
-
 A composition root in the _MVC_ application is implemented with custom _IControllerFactory_. An implementation of this interface from scratch might be too complicated but it is possible to inherit from _DefaultControllerFactory_ and override _GetControllerInstance_ method.
 
 In _EPiServer_ there is a custom implementation of _IControllerFactory_ - _ControllerTypeControllerFactory_ which adds _EPiServer_ specific controller type detection. So when implementing your own composition root it is wise to inherit from _ControllerTypeControllerFactory_. As with _DefaultControllerFactory_, override _GetControllerInstance_ method.

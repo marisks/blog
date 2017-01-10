@@ -7,9 +7,6 @@ tags: [F#, Android]
 date: 2016-04-19
 visible: true
 ---
-<p class="lead">
-I am not a mobile application developer but I needed to build an Android application. As for .NET developer, Xamarin Android was a natural choice.
-</p>
 
 # Introduction
 

@@ -8,10 +8,6 @@ date: 2015-04-27
 visible: true
 ---
 
-<p class="lead">
-Most popular approach for creating Xaml applications is MVVM - Model View ViewModel. But there is an alternative - MVC (Model View Controller). So what are advantages of using one or another in your F# projects?
-</p>
-
 # Introduction
 
 I am mainly Web developer and haven't created much desktop applications. I started some toy project and wanted to try creating desktop application in _WPF_. I wanted to follow best practices and started to look what approaches are used to build _Xaml_ apps. Most common choice is [MVVM](http://en.wikipedia.org/wiki/Model_View_ViewModel), but recently I was reading the book [F# Deep Dives](http://www.manning.com/petricek2/) where [Dmitry Morozov](https://twitter.com/mitekm) described [MVC](http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller). Thanks to the [FsXaml type provider](https://github.com/fsprojects/FsXaml) implementing both approaches now is really easy.
@@ -30,7 +26,7 @@ Project template also installs few _NuGet_ packages which will help you to work 
 
 <img src="/img/2015-02/wpf-nuget-dependences.png" alt="NuGet dependences" class="img-responsive">
 
-Now you can start building your application. First of all let's create _Xaml_ view for our application. The view will be same for both _MVVM_ and _MVC_ application with minimal differences. It should display score for both teams, there should be the buttons to increase and decrease (to fix mistaken increase) score and there should be the button to start new game. 
+Now you can start building your application. First of all let's create _Xaml_ view for our application. The view will be same for both _MVVM_ and _MVC_ application with minimal differences. It should display score for both teams, there should be the buttons to increase and decrease (to fix mistaken increase) score and there should be the button to start new game.
 
 <img src="/img/2015-02/gasby_main_window.png" alt="Game score board main window" class="img-responsive">
 
@@ -47,7 +43,7 @@ First of all create model for score - record type to hold score for team A and t
 
 Then define view model which will handle all UI logic. Inherit view model from _ViewModelBase_ (you have to open _FSharp.ViewModule_ for it).
 
-    type MainViewModel() as self = 
+    type MainViewModel() as self =
         inherit ViewModelBase()
 
 Next in _Xaml_ view import local and model namespaces of _Window_ control (I am using _MahApps_ _MetroWindow_ control). Namespace should contain also assembly name.
@@ -82,9 +78,9 @@ Next in view model create mutable field to store current score value and initial
 
     // ...
 
-    member self.ScoreA with get() = scoreA.Value 
+    member self.ScoreA with get() = scoreA.Value
                         and set value = scoreA.Value <- value
-    member self.ScoreB with get() = scoreB.Value 
+    member self.ScoreB with get() = scoreB.Value
                         and set value = scoreB.Value <- value
 
 Bind those properties in _Xaml_ view to labels. Those should be bound to label's _Content_ attribute.
@@ -112,13 +108,13 @@ All these actions should be bound to buttons on _Xaml_ view and also each action
 Then I created helper function to compose all defined functions with _updateScore_ function and pattern match on resulting tuple to extract new composed functions.
 
     let buildCommands (incA, decA, incB, decB, newGame) =
-        let commands = [incA; decA; incB; decB; newGame] 
+        let commands = [incA; decA; incB; decB; newGame]
                         |> List.map (fun f -> f >> updateScore)
         match commands with
         | [A; B; C; D; E] -> A, B, C, D, E
         | _ -> failwith "Error"
 
-    let (incACommand, decACommand, incBCommand, decBCommand, newGameCommand) = 
+    let (incACommand, decACommand, incBCommand, decBCommand, newGameCommand) =
         buildCommands(incA, decA, incB, decB, newGame)
 
 Probably manually composing each new function would be easier, but this was good excercise to do :).
@@ -133,7 +129,7 @@ Now create view model methods for each command using _FSharp.ViewModule_ factory
 
 Bind these commands to _Xaml_ view like in code below. Commands are bound to _Command_ attribute.
 
-    <Button Command="{Binding NewGame}"></Button> 
+    <Button Command="{Binding NewGame}"></Button>
 
 ## Pros
 
@@ -141,7 +137,7 @@ _MVVM_ pattern looks quite simple in this application. It is also popular in _WP
 
 ## Cons
 
-UI logic and view model is coupled in one view model class. It is not event-driven by default. 
+UI logic and view model is coupled in one view model class. It is not event-driven by default.
 
 # MVC
 
@@ -166,12 +162,12 @@ Now it's time to define view and it's events. Events are just discriminated unio
 
 The view wires model, events and _Xaml_ window together.
 
-    type MainView(root : MainWindow) as x = 
+    type MainView(root : MainWindow) as x =
         inherit View<ScoringEvents, ScoreModel, MetroWindow>(root.Root)
 
 Then map control events to our model events - _ScoringEvents_ by overriding _EventStreams_ property. It should return event stream (_IObservable_) of our _ScoringEvents_.
 
-    override x.EventStreams = 
+    override x.EventStreams =
         [
             let buttonClicks =
                 [
@@ -181,7 +177,7 @@ Then map control events to our model events - _ScoringEvents_ by overriding _Eve
                     root.DecBButton, DecB
                     root.NewGameButton, New
                 ]
-                |> List.map (fun (btn, evt) -> btn.Click 
+                |> List.map (fun (btn, evt) -> btn.Click
                                             |> Observable.mapTo evt)
             yield! buttonClicks
         ]
@@ -190,7 +186,7 @@ In this example I have only buttons and only _Click_ event for each. So the easi
 
 Next bind model to label controls by overriding _SetBindings_ method. _SetBindings_ method has model as a parameter. Binding is defined using _Binding_ class method _OfExpression_ and providing it expression with binding between controls' properties and model properties.
 
-    override x.SetBindings model = 
+    override x.SetBindings model =
         let root = MainWindow(x.Root)
         let scoreFormat (s:int) = s.ToString("D2") :> obj
         Binding.OfExpression
@@ -210,7 +206,7 @@ Now define controller. It should implement interface - _IController_ by providin
             member x.InitModel model =
                 model.ScoreA <- 0
                 model.ScoreB <- 0
-            
+
             member x.Dispatcher = function
                 | IncA -> Sync x.IncA
                 | DecA -> Sync x.DecA

@@ -7,9 +7,8 @@ tags: [.NET,EF,Entity Framework]
 date: 2016-02-27
 visible: true
 ---
-<p class="lead">
+
 When working with a database, quite often it is useful to implement soft-delete of records. It simplifies related record management and also preserves some history. It is also common to have Created and Modified dates on the record. While it is possible to do soft delete and setting Created, Modified dates manually, it is error prone. Entity Framework provides an API to do it silently.
-</p>
 
 When I started to look for the solution I found an article by Rakesh Babu Paruchuri: [Soft Deleting Entities Cleanly Using Entity Framework 6 Interceptors](http://www.codeguru.com/csharp/csharp/soft-deleting-entities-cleanly-using-entity-framework-6-interceptors.html). He uses an attribute to decorate entities with and set the name of _IsDeleted_ column name. I do not like this approach because you duplicate your code - define _IsDeleted_ property on the entity and also set _SoftDelete_ attribute which defines which property use for soft delete. It is simpler, more consistent and less error prone to just "hardcode" the name of the property or allow it to be configured globally.
 

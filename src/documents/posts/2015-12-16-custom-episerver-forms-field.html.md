@@ -1,16 +1,14 @@
 ---
 layout: post
 title: "Custom EPiServer Forms field"
-description: "EPiServer recently released new add-on - EPiServer Forms. It is a new way how to work with the forms in EPiServer. Forms have different form elements available - Text (input), Text area, Number etc., but it misses basic label, heading and text elements to display static information for form users. Also, quite often there are requirements to provide additional information based on page's context - for example, on the product page, it might be required to post product code and name. This article describes basic steps to create custom EPiServer Forms field."
+description: >
+  <t render="markdown">
+  _EPiServer_ recently released new add-on - <a href="http://webhelp.episerver.com/15-5/EN/addons/episerver-forms/episerver-forms.htm">_EPiServer Forms_</a>. It is a new way how to work with the forms in _EPiServer_. _Forms_ have different form elements available - _Text (input)_, _Text area_, _Number_ etc., but it misses basic label, heading and text elements to display static information for form users. Also, quite often there are requirements to provide additional information based on page's context - for example, on the product page, it might be required to post product code and name. This article describes basic steps to create custom _EPiServer Forms_ field.</t>
 category: [EPiServer]
 tags: [EPiServer]
 date: 2015-12-14
 visible: true
 ---
-
-<p class="lead">
-_EPiServer_ recently released new add-on - <a href="http://webhelp.episerver.com/15-5/EN/addons/episerver-forms/episerver-forms.htm">_EPiServer Forms_</a>. It is a new way how to work with the forms in _EPiServer_. _Forms_ have different form elements available - _Text (input)_, _Text area_, _Number_ etc., but it misses basic label, heading and text elements to display static information for form users. Also, quite often there are requirements to provide additional information based on page's context - for example, on the product page, it might be required to post product code and name. This article describes basic steps to create custom _EPiServer Forms_ field.
-</p>
 
 First of all, you have to install _EPiServer Forms_ add-on into your project using _NuGet_:
 

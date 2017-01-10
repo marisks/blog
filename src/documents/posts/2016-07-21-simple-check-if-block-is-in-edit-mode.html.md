@@ -8,10 +8,6 @@ date: 2016-07-21
 visible: true
 ---
 
-<p class="lead">
-When working with EPiServer page views there is a useful property - PageEditing.PageIsInEditMode, which allows checking if the page is open in edit mode. But when working with block views, there is no such property.
-</p>
-
 I found one solution on [EPiServer Forum](http://world.episerver.com/forum/developer-forum/EPiServer-7-CMS/Thread-Container/2014/2/Check-if-Block-is-in-editmode/) but I do not like it because it uses _ViewBag_ or developer should check if the current page is a _PreviewPage_.
 
 Instead, I have created extension method _BlockIsInEditMode_ for the _ViewContext_.

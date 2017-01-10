@@ -7,9 +7,6 @@ tags: [EPiServer]
 date: 2016-03-17
 visible: true
 ---
-<p class="lead">
-Recently I had to setup Service API for one project and got some issues configuring it. Here are the list of those issues and solution to them.
-</p>
 
 # Access rights
 

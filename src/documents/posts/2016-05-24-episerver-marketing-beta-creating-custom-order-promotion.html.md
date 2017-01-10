@@ -8,10 +8,6 @@ date: 2016-05-24
 visible: true
 ---
 
-<p class="lead">
-Lately, I had to build a custom order promotion in one of our projects in Geta. We are using latest EPiServer Marketing features but unfortunately as it is in Beta still, its API changes quite often. I had to re-build my custom promotion already twice. In this article, I will describe how to build a custom order promotion with the latest EPiServer Commerce version (9.15.0).
-</p>
-
 In the new version of _EPiServer Marketing_, promotion is just _IContent_. It can be loaded with _IContentLoader_, modified with _IContentRepository_ etc.. There are several types of promotions. Below I defined simple _OrderPromotion_ which applies a discount to the whole order.
 
 ```

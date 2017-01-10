@@ -8,10 +8,6 @@ date: 2015-05-04
 visible: true
 ---
 
-<p class="lead">
-EPiServer provides Scheduled Jobs to run background tasks on schedule. By default those have simple scheduling available, but sometimes you might need more advanced scheduling techniques. EPiServer provides API for that.
-</p>
-
 In older versions _EPiServer_ had used _ScheduledJob_ class as [active record](http://en.wikipedia.org/wiki/Active_record_pattern) to manipulate _Scheduled Jobs_, but now all _active record_ methods became obsolete. New way of working with _Scheduled Jobs_ is using _ScheduledJobRepository_. It provides several methods to get and store _Scheduled Jobs_ which might be useful:
 
 * _Get(Guid id):ScheduledJob_ - retrieve _Scheduled Job_ by it's ID,
