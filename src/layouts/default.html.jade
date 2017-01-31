@@ -1,97 +1,108 @@
 doctype html
 //if lt IE 8
-	html.no-js.lt-ie9.lt-ie8(lang="en")
+    html.no-js.lt-ie9.lt-ie8(lang="en")
 //if IE 8
-	html.no-js.lt-ie9(lang="en")
+    html.no-js.lt-ie9(lang="en")
 //if gt IE 8
-	html.no-js(lang="en")
+    html.no-js(lang="en")
 head
-	meta(charset="utf-8")
-	meta(http-equiv="X-UA-Compatible", content="IE=edge")
-	title
-		!= getPreparedTitle()
-	meta(name="description", content="#{getPreparedDescription()}")
-	meta(name="keywords", content="#{getPreparedKeywords()}")
-	meta(name="viewport", content="width=device-width, initial-scale=1")
-	//Place favicon.ico and apple-touch-icon.png in the root directory
-	!= getBlock('meta').add(site.meta).toHTML()
-	link(rel="icon",sizes="16x16 32x32",href="/favicon.ico?v=1")
-	!= getBlock("styles").add(site.styles).toHTML()
-	script(src="/js/vendor/modernizr-2.6.2.min.js")
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    title
+        != getPreparedTitle()
+    meta(name="description", content="#{getPreparedDescription()}")
+    meta(name="keywords", content="#{getPreparedKeywords()}")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    //Place favicon.ico and apple-touch-icon.png in the root directory
+    != getBlock('meta').add(site.meta).toHTML()
+    link(rel="icon",sizes="16x16 32x32",href="/favicon.ico?v=1")
+    != getBlock("styles").add(site.styles).toHTML()
+    script(src="/js/vendor/modernizr-2.6.2.min.js")
 body
-	// Google Tag Manager
-	noscript
-		iframe(src='//www.googletagmanager.com/ns.html?id=GTM-WGPHF7', height='0', width='0', style='display: none; visibility: hidden;')
-	script.
-		(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-		'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-		})(window,document,'script','dataLayer','GTM-WDKMR7');
-	// End Google Tag Manager
+    // Google Tag Manager
+    noscript
+        iframe(src='//www.googletagmanager.com/ns.html?id=GTM-WGPHF7', height='0', width='0', style='display: none; visibility: hidden;')
+    script.
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-WDKMR7');
+    // End Google Tag Manager
 
-	//if lt IE 8
-		p.browsehappy
-			|You are using an
-			strong
-				|outdated browser
-			|. Please
-			a(href="http://browsehappy.com/")
-				|upgrade your browser
-			|to improve your experience.
+    //if lt IE 8
+        p.browsehappy
+            |You are using an
+            strong
+                |outdated browser
+            |. Please
+            a(href="http://browsehappy.com/")
+                |upgrade your browser
+            |to improve your experience.
 
-	#wrap
-		.navbar.navbar-ornament.navbar-fixed-top(role="navigation")
-			.container
-				.navbar-header
-					a.navbar-brand(href="/")
-						!= site.title
-		.container
-			.row
-				.col-sm-8
-					!= content
-				.col-sm-1
-					aside.archive
-						!= partial('archive-nav')
-				.col-sm-3
-					aside.panel.panel-default
-						.panel-body
-							.about
-								img.center-block.img-responsive.thumbnail(src="/img/common/profile_0021.jpg", alt="profile picture")
-								p
-									| Hi! I'm Māris Krivtežs. I am Web developer primarily working with ASP.NET, EPiServer and front-end development at
-									a(href="http://geta.no", target="_blank")
-										| Geta
-									| , but same time learning different programming languages, learning new programming paradigms, architectures, and design. I spend my free time with my family, reading books, bicycling and traveling.
-
-
-							ul.social
-								li
-									a(href="http://stackoverflow.com/users/660154/marisks", target="_blank")
-										i.fa.fa-stack-overflow
-								li
-									a(href="https://github.com/marisks", target="_blank")
-										i.fa.fa-github-alt
-								li
-									a(href="https://twitter.com/pioners1001", target="_blank")
-										i.fa.fa-twitter
-								li
-									a(href="http://www.linkedin.com/pub/maris-krivtezs/31/98b/b53", target="_blank")
-										i.fa.fa-linkedin
-								li
-									a(href="/rss.xml", target="_blank")
-										i.fa.fa-rss
-
-							a(href="https://getadigital.com", target="_blank")
-								img.center-block.img-responsive.aside-logo(src="/img/common/ident-geta-wordmark.svg", alt="Geta logo")
+    #wrap
+        .navbar.navbar-ornament.navbar-fixed-top(role="navigation")
+            .container
+                .navbar-header
+                    a.navbar-brand(href="/")
+                        != site.title
+        .container
+            .row
+                .col-sm-8
+                    != content
+                .col-sm-1
+                    aside.archive
+                        != partial('archive-nav')
+                .col-sm-3
+                    aside.panel.panel-default
+                        .panel-body
+                            .about
+                                img.center-block.img-responsive.thumbnail(src="/img/common/profile_0021.jpg", alt="profile picture")
+                                p
+                                    | Hi! I'm Māris Krivtežs. I am Web developer primarily working with ASP.NET, EPiServer and front-end development at&nbsp;
+                                    a(href="http://geta.no", target="_blank")
+                                        | Geta
+                                    | , but same time learning different programming languages, learning new programming paradigms, architectures, and design. I spend my free time with my family, reading books, bicycling and traveling.
 
 
-	#footer
-		.container
-			p.container.credit
-				| Copyright &copy; 2017 - Maris Krivtezs
+                            ul.social
+                                li
+                                    a(href="http://stackoverflow.com/users/660154/marisks", target="_blank")
+                                        i.fa.fa-stack-overflow
+                                li
+                                    a(href="https://github.com/marisks", target="_blank")
+                                        i.fa.fa-github-alt
+                                li
+                                    a(href="https://twitter.com/pioners1001", target="_blank")
+                                        i.fa.fa-twitter
+                                li
+                                    a(href="http://www.linkedin.com/pub/maris-krivtezs/31/98b/b53", target="_blank")
+                                        i.fa.fa-linkedin
+                                li
+                                    a(href="/rss.xml", target="_blank")
+                                        i.fa.fa-rss
 
-	script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
-	script.
-		window.jQuery || document.write('<script src="/js/vendor/jquery-1.10.2.min.js"><\/script>')
-	!= getBlock('scripts').add(site.scripts, {defer:false}).toHTML()
+                            a(href="https://getadigital.com", target="_blank")
+                                img.center-block.img-responsive.aside-logo(src="/img/common/ident-geta-wordmark.svg", alt="Geta logo")
+
+
+    #footer
+        .container
+            .container.credit
+                | Copyright &copy; 2017 Maris Krivtezs. All Rights Reserved, except for the parts enumerated below:
+                ul.licence-list
+                    li
+                        | - The source code examples on this blog are covered by&nbsp;
+                        a(href="https://opensource.org/licenses/mit-license.php")
+                            | MIT License
+                        | .
+                    li
+                        | - This page content, excluding the visual design and the logotype, is covered by&nbsp;
+                        a(href="http://creativecommons.org/licenses/by/4.0/")
+                            | Creative Commons Attribution 4.0 International License
+                        | .
+
+    script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
+    script.
+        window.jQuery || document.write('<script src="/js/vendor/jquery-1.10.2.min.js"><\/script>')
+    != getBlock('scripts').add(site.scripts, {defer:false}).toHTML()
