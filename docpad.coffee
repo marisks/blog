@@ -1,3 +1,9 @@
+strip = require("strip-markdown")
+remark = require("remark")
+
+strip_md = (value) ->
+  remark().use(strip).processSync(value).toString().trim()
+
 # The DocPad Configuration File
 # It is simply a CoffeeScript Object which is parsed by CSON
 docpadConfig = {
@@ -63,7 +69,7 @@ docpadConfig = {
 		# Get the prepared site/document description
 		getPreparedDescription: ->
 			# if we have a document description, then we should use that, otherwise use the site's description
-			@document.description or @site.description
+			strip_md(@document.description) or @site.description
 
 		# Get the prepared site/document keywords
 		getPreparedKeywords: ->
