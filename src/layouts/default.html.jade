@@ -15,19 +15,23 @@ head
     meta(name="viewport", content="width=device-width, initial-scale=1")
     //Place favicon.ico and apple-touch-icon.png in the root directory
     != getBlock('meta').add(site.meta).toHTML()
+
+    // Google Tag Manager
+    script.
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-WDKMR7');
+    // End Google Tag Manager
+
     link(rel="icon",sizes="16x16 32x32",href="/favicon.ico?v=1")
     != getBlock("styles").add(site.styles).toHTML()
     script(src="/js/vendor/modernizr-2.6.2.min.js")
 body
     // Google Tag Manager
     noscript
-        iframe(src='//www.googletagmanager.com/ns.html?id=GTM-WGPHF7', height='0', width='0', style='display: none; visibility: hidden;')
-    script.
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-WDKMR7');
+        iframe(src='//www.googletagmanager.com/ns.html?id=GTM-WDKMR7', height='0', width='0', style='display: none; visibility: hidden;')
     // End Google Tag Manager
 
     //if lt IE 8
