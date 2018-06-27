@@ -7,7 +7,6 @@
     "npm": "1.3"
   },
   "dependencies": {
-    "docpad": "~6.79.0",
     "docpad-plugin-cleanurls": "~2.8.1",
     "docpad-plugin-dateurls": "~2.4.0",
     "docpad-plugin-ghpages": "~2.4.4",
@@ -24,7 +23,7 @@
     "start": "node_modules/docpad/bin/docpad-server"
   },
   "devDependencies": {
-    "docpad": "~6.63.3",
+    "docpad": "^6.79.4",
     "docpad-plugin-cleanurls": "~2.8.1",
     "docpad-plugin-dateurls": "~2.4.0",
     "docpad-plugin-ghpages": "~2.4.4",
@@ -33,7 +32,7 @@
     "docpad-plugin-livereload": "~2.7.1",
     "docpad-plugin-marked": "~2.3.0",
     "docpad-plugin-rss": "~2.3.1",
-    "remark": "^7.0.0",
-    "strip-markdown": "^3.0.0"
+    "remark": "^7.0.1",
+    "strip-markdown": "^3.0.1"
   }
 }
