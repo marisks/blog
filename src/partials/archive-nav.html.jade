@@ -1,8 +1,8 @@
 ul.nav
-  li(class="#{isCurrent(2020,true)}")
+  li(class="#{isCurrent(2021,true)}")
     a(href="/")
-      | 2020
-  - for(var year = 2019; year >= 2012; year--)
+      | 2021
+  - for(var year = 2020; year >= 2012; year--)
     li(class="#{isCurrent(year)}")
       a(href="/#{year}/")
         != year

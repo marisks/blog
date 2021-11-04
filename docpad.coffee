@@ -24,12 +24,12 @@ docpadConfig = {
 
 			# The website description (for SEO)
 			description: """
-					blog about .NET, JavaScript, Web, EPiServer and programming languages
+					blog about .NET, JavaScript, Web, Optimizely (ex Episerver) and programming languages
 				"""
 
 			# The website keywords (for SEO) separated by commas
 			keywords: """
-				.NET, ASP.NET, C#, JavaScript, EPiServer, programming languages
+				.NET, ASP.NET, C#, JavaScript, Optimizely, EPiServer, programming languages
 				"""
 
 			# The website's styles
@@ -87,7 +87,7 @@ docpadConfig = {
 					visible = model.get('visible')
 					if visible? then visible else true
 
-		episerverPosts: ->
+		optimizelyPosts: ->
 			@getCollection("documents").findAllLive({relativeDirPath: 'posts'}, [date: -1])
 				.setFilter 'visible', (model) ->
 					visible = model.get('visible')
@@ -96,7 +96,7 @@ docpadConfig = {
 					tags = model.get('tags')
 					return false unless tags? and Array.isArray(tags)
 					for tag in tags
-						if tag.toLowerCase() is 'episerver' then return true
+						if tag.toLowerCase() is 'episerver' or tag.toLowerCase() is 'optimizely' then return true
 					false
 
 
@@ -145,7 +145,7 @@ docpadConfig = {
 				collection: 'posts'
 				url: '/rss.xml'
 			episerver:
-				collection: 'episerverPosts'
+				collection: 'optimizelyPosts'
 				url: '/episerver-rss.xml'
 }
 
