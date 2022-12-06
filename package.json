@@ -23,7 +23,7 @@
     "start": "node_modules/docpad/bin/docpad-server"
   },
   "devDependencies": {
-    "docpad": "^6.79.4",
+    "docpad": "^6.83.2",
     "docpad-plugin-cleanurls": "~2.8.1",
     "docpad-plugin-dateurls": "~2.4.0",
     "docpad-plugin-ghpages": "~2.4.4",
